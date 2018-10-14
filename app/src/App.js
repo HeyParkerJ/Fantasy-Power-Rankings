@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import Axios from 'axios';
+import SeasonContainer from './SeasonContainer';
+import DataDisplay from './DataDisplay';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      data: {},
       seasons: [2015, 2016, 2017, 2018]
     }
   }
 
-  requestData = () => {
-    Axios.get('http://localhost:1337/data/2018').then((res) => {
-      this.setState({data: res.data})
-    })
-  }
-
   render() {
+    let seasonComponents = []
+    this.state.seasons.forEach((season) => {
+      seasonComponents.push(
+          <SeasonContainer key={`seasonContainer-`+season} season={season} />
+      )
+    })
     return (
       <div className="App">
-        <ButtonContainer seasons={this.state.seasons} />
+        {seasonComponents}
       </div>
     );
   }

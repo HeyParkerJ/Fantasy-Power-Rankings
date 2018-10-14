@@ -22,7 +22,6 @@ app.get('/data/test', (req, res) => {
 })
 
 app.get('/data/:year', (req, res) => {
-    console.log('retrieved request')
     const year = req.params.year
     const filePath = path.resolve(process.cwd(), 'data/'+year+'.json')
     fs.stat(filePath, (error) => {

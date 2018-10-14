@@ -33,7 +33,7 @@ app.get('/data/test', function (req, res) {
   });
 });
 app.get('/data/:year', function (req, res) {
-  console.log('retrieved request');
+  console.log('retrieved request', req.params.year, req);
   var year = req.params.year;
 
   var filePath = _path.default.resolve(process.cwd(), 'data/' + year + '.json');
