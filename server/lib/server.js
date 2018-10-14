@@ -22,6 +22,16 @@ app.use(_bodyParser.default.urlencoded({
   extended: true,
   paremeterLimit: 50000
 }));
+app.get('/data/test', function (req, res) {
+  res.send({
+    "hello": "world",
+    "name": "parker Johnson",
+    "data": {
+      "data1": "true",
+      "data2": false
+    }
+  });
+});
 app.get('/data/:year', function (req, res) {
   console.log('retrieved request');
   var year = req.params.year;

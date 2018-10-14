@@ -10,6 +10,17 @@ app.use(cors())
 app.use(bodyParser.json({limit: "50mb"}))
 app.use(bodyParser.urlencoded({limit:"50mb", extended:true, paremeterLimit:50000}))
 
+app.get('/data/test', (req, res) => {
+  res.send({
+    "hello": "world",
+    "name": "parker Johnson",
+    "data": {
+      "data1": "true",
+      "data2": false
+    }
+  })
+})
+
 app.get('/data/:year', (req, res) => {
     console.log('retrieved request')
     const year = req.params.year
