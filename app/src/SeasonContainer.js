@@ -11,7 +11,7 @@ class SeasonContainer extends Component {
   }
 
   handleClick = () => {
-    Axios.get('http://localhost:1337/data/'+this.props.season).then((res) => {
+    Axios.get('http://heyparkerj.com/data/'+this.props.season).then((res) => {
       this.setState({data: res.data})
     })
   }
