@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import fs from 'fs';
+import User from './schema/User'
 
 const app = express()
 
@@ -40,6 +41,39 @@ app.get('/data/:year', (req, res) => {
         }
     })
 })
+
+app.get('/powerRankings/test', (req, res) => {
+  res.send({
+    "hello": "world",
+    "name": "parker Johnson",
+    "data": {
+      "data1": "true",
+      "data2": false
+    }
+  })
+})
+
+app.post('/powerRankings/makeUser', (req, res) => {
+  if(req.body.username &&
+     req.body.password &&
+     req.body.passwordConf) {
+    var userData = {
+      username: req.body.username,
+      password: req.body.password,
+      passwordConf: req.body.passwordConf,
+    }
+
+    // use scheme.create to insert data into the db
+    User.create(userData, function(err, user) {
+      if(err) {
+        return next(err)
+      } else {
+        return res.redirect('/profile');
+      }
+    })
+  }
+})
+
 
 const port = 1337
 app.listen(port, () => {
