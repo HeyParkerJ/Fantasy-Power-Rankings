@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
-import SeasonContainer from './SeasonContainer';
-import DataDisplay from './DataDisplay';
+import RawData from './RawData';
+import PowerRankings from './PowerRankings';
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      seasons: [2015, 2016, 2017, 2018]
-    }
-  }
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-  render() {
-    let seasonComponents = []
-    this.state.seasons.forEach((season) => {
-      seasonComponents.push(
-          <SeasonContainer key={`seasonContainer-`+season} season={season} />
-      )
-    })
-    return (
-      <div className="App">
-        {seasonComponents}
-      </div>
-    );
-  }
-}
+const Home = () => (
+    <div>
+      <h2>Home</h2>
+      <p>To be honest I'm not sure what this segment is gonna look like yet but it should probably be here. Pick something else</p>
+    </div>
+)
+
+const App = () => (
+  <Router>
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/raw">Raw Data</Link>
+        </li>
+        <li>
+          <Link to="/powerRankings">Power Rankings</Link>
+        </li>
+      </ul>
+
+      <Route exact path="/" component={Home} />
+      <Route path="/raw" component={RawData} />
+      <Route path="/powerRankings" component={PowerRankings} />
+    </div>
+  </Router>
+)
 
 export default App;
