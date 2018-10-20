@@ -11,26 +11,34 @@ const SubmitRankingsContainer = () => (
 
 
 class PowerRankings extends Component {
+  constructor() {
+    super()
+    this.state = {
+      isLoggedIn: false,
+      username: undefined
+    }
+  }
 
-  sendTestData = () => {
+
+  login = () => {
     let data = {
-      firstName: 'Parker',
-      isTestData: true,
-      mockingbird: 'yea',
+      username: 'Parker',
+      password: 'prkr',
     }
 
-    let request = Requests.sendTestData(data);
-    request.then((res) => {
-      this.setState({data: res.data})
+    Requests.loginUser(data).then((res) => {
+      this.setState({isLoggedIn: true, username: res.data[0].username})
     })
+
   }
 
   render() {
     return (
         <div>
+          {this.state.isLoggedIn ? <p>Logged in as: {this.state.username}</p> : null}
           <SubmitRankingsContainer />
           {/*<RankingsDisplayContainer/>*/}
-          <button onClick={this.sendTestData}>SendTestData</button>
+          <button onClick={this.login}>Login</button>
         </div>
     )
   }
