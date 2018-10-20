@@ -28,7 +28,12 @@ class RankingSelectionContainer extends Component {
   }
 
   render() {
-    return <SortableList items={this.state.items} onSortEnd={this.onSortEnd}/>
+    return (
+      <div>
+        <p>Logged in as: {this.props.username}</p> 
+        <SortableList items={this.state.items} onSortEnd={this.onSortEnd}/>
+      </div>
+    )
   }
 }
 
