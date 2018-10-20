@@ -29,7 +29,8 @@ const App = () => (
 
       <Route exact path="/" component={Home} />
       <Route path="/raw" component={RawData} />
-      <Route path="/powerRankings" component={PowerRankings} />
+      <Route path="/powerRankings" component={PowerRankings} >
+      </Route>
     </div>
   </Router>
 )
