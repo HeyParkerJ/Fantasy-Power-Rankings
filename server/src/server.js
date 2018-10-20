@@ -3,13 +3,26 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import fs from 'fs';
-import User from './schema/User'
+import UserLogin from './model/UserLogin'
+import mongoose from 'mongoose';
+ 
+let Schema = mongoose.Schema;
 
 const app = express()
-
-app.use(cors())
 app.use(bodyParser.json({limit: "50mb"}))
 app.use(bodyParser.urlencoded({limit:"50mb", extended:true, paremeterLimit:50000}))
+
+let mongoDB = 'mongodb://localhost/test'
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise; // Weird
+let db = mongoose.connection
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', function() {
+  console.log('connection open!!')
+})
+
+
+app.use(cors())
 
 app.get('/data/test', (req, res) => {
   res.send({
@@ -42,13 +55,22 @@ app.get('/data/:year', (req, res) => {
     })
 })
 
-app.get('/powerRankings/test', (req, res) => {
-  res.send({
-    "hello": "world",
-    "name": "parker Johnson",
-    "data": {
-      "data1": "true",
-      "data2": false
+app.post('/api/login', (req, res) => {
+  let userData = {}
+  if(req.body.username &&
+      req.body.password) {
+
+    userData = {
+      username: req.body.username,
+    }
+  }
+
+  UserLogin.find(userData, function(err, user) {
+    if(user.password === userData.password) {
+      console.log('passed auth')
+      res.status(200).send(user)
+    } else {
+      console.log('error finding one', err)
     }
   })
 })
