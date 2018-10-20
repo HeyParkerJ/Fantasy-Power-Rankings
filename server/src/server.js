@@ -75,6 +75,16 @@ app.post('/api/login', (req, res) => {
   })
 })
 
+app.get('/api/getUsers', (req, res) => {
+  UserLogin.find({}, function(err, users) {
+    let data = []
+    users.forEach((user) => {
+      data.push({username: user.username})
+    })
+    res.status(200).send(data);
+  })
+})
+
 app.post('/powerRankings/makeUser', (req, res) => {
   if(req.body.username &&
      req.body.password &&

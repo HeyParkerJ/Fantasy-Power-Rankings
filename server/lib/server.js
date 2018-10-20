@@ -87,6 +87,17 @@ app.post('/api/login', function (req, res) {
     }
   });
 });
+app.get('/api/getUsers', function (req, res) {
+  _UserLogin.default.find({}, function (err, users) {
+    var data = [];
+    users.forEach(function (user) {
+      data.push({
+        username: user.username
+      });
+    });
+    res.status(200).send(data);
+  });
+});
 app.post('/powerRankings/makeUser', function (req, res) {
   if (req.body.username && req.body.password && req.body.passwordConf) {
     var userData = {
