@@ -66,12 +66,11 @@ app.post('/api/login', (req, res) => {
   }
 
   UserLogin.find(userData, function(err, user) {
-    console.log(userData, user)
-    console.log('user.password', user[0].password, 'userData.password', userData.password)
     if(user[0].password === req.body.password) {
-      console.log('passed auth')
+      console.log('user passed auth', user)
       res.status(200).send(user)
     } else {
+      console.warn('user failed auth', req.body.username, req.body.password)
       res.status(401).send()
     }
   })
