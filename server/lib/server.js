@@ -79,11 +79,15 @@ app.post('/api/login', function (req, res) {
   }
 
   _UserLogin.default.find(userData, function (err, user) {
-    if (user.password === userData.password) {
+    console.log(userData, user);
+    console.log('user.password', user[0].password, 'userData.password', userData.password);
+
+    if (user[0].password === req.body.password) {
       console.log('passed auth');
       res.status(200).send(user);
     } else {
       console.log('error finding one', err);
+      res.status(401).send();
     }
   });
 });

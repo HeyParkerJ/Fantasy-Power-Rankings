@@ -12,6 +12,8 @@ class LoginButton extends Component {
 
     Requests.loginUser(data).then((res) => {
       this.props.setUsername(res.data[0].username)
+    }).catch((err) => {
+      this.props.setLoginError(err);
     })
   }
 
@@ -27,6 +29,7 @@ class LoginComponent extends Component {
     super()
     this.state = {
       users: undefined,
+      error: null,
     }
   }
 
@@ -37,21 +40,36 @@ class LoginComponent extends Component {
     })
   }
 
+  setLoginError = (err) => {
+    this.setState({error: err.message})
+  }
+
   RenderButtons = () => {
     let buttons = []
     this.state.users.forEach((user) => {
-      buttons.push(<LoginButton username={user.username} setUsername={this.props.setUsername} />)
+      buttons.push(<LoginButton username={user.username} setUsername={this.props.setUsername} setLoginError={this.setLoginError}/>)
     })
     return buttons;
   }
 
   render() {
     let buttons = []
+    let error = []
     if(this.state.users) {
       buttons = this.RenderButtons(); 
     }
+    if(this.state.error) {
+      error = (
+        <div>
+          <p>Try not to mess this up, we got an error from the server:</p>
+          <p>{this.state.error}</p>
+        </div>
+      )
+    }
+
     return (
       <div>
+        {error}
         <p>Which of these idiots you is?</p>
         {buttons}
       </div>
