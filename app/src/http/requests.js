@@ -31,7 +31,6 @@ export default {
           resolve(response);
         })
         .catch((err) => {
-          return err;
           reject(err);
         })
     })
