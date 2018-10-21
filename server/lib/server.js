@@ -79,12 +79,27 @@ app.post('/api/login', function (req, res) {
   }
 
   _UserLogin.default.find(userData, function (err, user) {
-    if (user.password === userData.password) {
+    console.log(userData, user);
+    console.log('user.password', user[0].password, 'userData.password', userData.password);
+
+    if (user[0].password === req.body.password) {
       console.log('passed auth');
       res.status(200).send(user);
     } else {
       console.log('error finding one', err);
+      res.status(401).send();
     }
+  });
+});
+app.get('/api/getUsers', function (req, res) {
+  _UserLogin.default.find({}, function (err, users) {
+    var data = [];
+    users.forEach(function (user) {
+      data.push({
+        username: user.username
+      });
+    });
+    res.status(200).send(data);
   });
 });
 app.post('/powerRankings/makeUser', function (req, res) {

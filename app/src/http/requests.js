@@ -23,4 +23,16 @@ export default {
         })
     })
   },
+
+  getUsers: () => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url+'api/getUsers')
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  },
 }
