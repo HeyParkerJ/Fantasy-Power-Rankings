@@ -79,14 +79,11 @@ app.post('/api/login', function (req, res) {
   }
 
   _UserLogin.default.find(userData, function (err, user) {
-    console.log(userData, user);
-    console.log('user.password', user[0].password, 'userData.password', userData.password);
-
     if (user[0].password === req.body.password) {
-      console.log('passed auth');
+      console.log('user passed auth', user);
       res.status(200).send(user);
     } else {
-      console.log('error finding one', err);
+      console.warn('user failed auth', req.body.username, req.body.password);
       res.status(401).send();
     }
   });
@@ -99,6 +96,21 @@ app.get('/api/getUsers', function (req, res) {
         username: user.username
       });
     });
+    res.status(200).send(data);
+  });
+});
+app.get('/api/getTeams', function (req, res) {
+  _UserLogin.default.find({}, function (err, users) {
+    var data = [];
+    users.forEach(function (user) {
+      console.log('user', user);
+      data.push({
+        username: user.username,
+        teamId: user.teamId,
+        emoji: user.emoji
+      });
+    });
+    console.log('ok heres the data', data);
     res.status(200).send(data);
   });
 });

@@ -17,6 +17,12 @@ var UserSchema = new _mongoose.default.Schema({
   password: {
     type: String,
     required: true
+  },
+  teamId: {
+    type: Number
+  },
+  emoji: {
+    type: String
   }
 });
 

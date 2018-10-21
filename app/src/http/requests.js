@@ -35,4 +35,18 @@ export default {
         })
     })
   },
+
+  getTeams: () => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url+'api/getTeams')
+        .then((response) => {
+          console.log('got response', response)
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  }
+
 }

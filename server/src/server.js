@@ -86,6 +86,17 @@ app.get('/api/getUsers', (req, res) => {
   })
 })
 
+app.get('/api/getTeams', (req, res) => {
+  UserLogin.find({}, function(err, users) {
+    let data = []
+    users.forEach((user) => {
+      data.push({username: user.username, teamId: user.teamId, emoji: user.emoji})
+    })
+
+    res.status(200).send(data);
+  })
+})
+
 app.post('/powerRankings/makeUser', (req, res) => {
   if(req.body.username &&
      req.body.password &&
