@@ -16,6 +16,10 @@ var _UserLogin = _interopRequireDefault(require("./model/UserLogin"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
+var _moment = _interopRequireDefault(require("moment"));
+
+var _DateUtils = _interopRequireDefault(require("./DateUtils"));
+
 var Schema = _mongoose.default.Schema;
 var app = (0, _express.default)();
 app.use(_bodyParser.default.json({
@@ -118,9 +122,9 @@ app.get('/api/getTeams', function (req, res) {
   });
 });
 app.post('/api/postPowerRankings', function (req, res) {
-  var time = Date.now();
-  console.log('inside submitPowerRankings', req.body.teamId, req.body.rankings);
-  console.log(time);
+  var week = _DateUtils.default.findWeekByDate(_moment.default.now());
+
+  console.log('found week', week);
 
   if (false) {
     PowerRankings.update({
