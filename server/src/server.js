@@ -5,7 +5,10 @@ import path from 'path';
 import fs from 'fs';
 import UserLogin from './model/UserLogin'
 import mongoose from 'mongoose';
- 
+
+import Moment from 'moment'
+import DateUtils from './DateUtils'
+
 let Schema = mongoose.Schema;
 
 const app = express()
@@ -105,11 +108,9 @@ app.get('/api/getTeams', (req, res) => {
 })
 
 app.post('/api/postPowerRankings', (req, res) => {
-  let time = Date.now()
+  let week = DateUtils.findWeekByDate(Moment.now())
 
-  console.log('inside submitPowerRankings', req.body.teamId, req.body.rankings)
-
-  console.log(time)
+  console.log('found week', week)
 
   if(false) {
     PowerRankings.update({teamId: req.body.teamId,
