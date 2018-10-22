@@ -1,37 +1,28 @@
 import React, { Component } from 'react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
-
-const SortableItem = SortableElement(
-  ({value}) =>
-    <li>Test</li>
-);
-
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value}/>
-      ))}
-    </ul>
-  )
-})
+import Requests from './http/requests';
+import RankingSelection from './RankingSelection';
 
 class RankingSelectionContainer extends Component {
-  state = {
-    items: ['Item 1',  'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+  constructor() {
+    super()
+    this.state = {
+      teams: undefined
+    }
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
-    this.setState({
-      items: arrayMove(this.state.items, oldIndex, newIndex),
+  componentDidMount() {
+    Requests.getTeams().then((res) => {
+      this.setState({teams: res.data})
     })
   }
 
   render() {
+    if(!this.state.teams) {
+      return null
+    }
     return (
       <div>
-        <p>Logged in as: {this.props.username}</p> 
-        <SortableList items={this.state.items} onSortEnd={this.onSortEnd}/>
+        <RankingSelection teams={this.state.teams} teamId={this.props.user.teamId}/>
       </div>
     )
   }

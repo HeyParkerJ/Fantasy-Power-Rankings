@@ -35,4 +35,31 @@ export default {
         })
     })
   },
+
+  getTeams: () => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url+'api/getTeams')
+        .then((response) => {
+          console.log('got response', response)
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  },
+
+  postPowerRankings: (powerRankings) => {
+    return new Promise((resolve, reject) => {
+      Axios.post(url+'api/postPowerRankings', powerRankings)
+        .then((response) => {
+          console.log('got response', response)
+          resolve(response);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  },
+
 }

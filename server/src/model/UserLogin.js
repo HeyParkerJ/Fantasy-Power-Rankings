@@ -10,7 +10,14 @@ let UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  teamId: {
+    type: Number
+  },
+  emoji: {
+    type: String
+  }
 });
 let UserLogin = mongoose.model('UserLogin', UserSchema);
 
 export default UserLogin;
+

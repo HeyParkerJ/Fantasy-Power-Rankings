@@ -16,6 +16,10 @@ var _UserLogin = _interopRequireDefault(require("./model/UserLogin"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
+var _moment = _interopRequireDefault(require("moment"));
+
+var _DateUtils = _interopRequireDefault(require("./DateUtils"));
+
 var Schema = _mongoose.default.Schema;
 var app = (0, _express.default)();
 app.use(_bodyParser.default.json({
@@ -79,14 +83,16 @@ app.post('/api/login', function (req, res) {
   }
 
   _UserLogin.default.find(userData, function (err, user) {
-    console.log(userData, user);
-    console.log('user.password', user[0].password, 'userData.password', userData.password);
-
     if (user[0].password === req.body.password) {
-      console.log('passed auth');
-      res.status(200).send(user);
+      console.log('user passed auth', user);
+      var data = {
+        teamId: user[0].teamId,
+        username: user[0].username,
+        emoji: user[0].emoji
+      };
+      res.status(200).send(data);
     } else {
-      console.log('error finding one', err);
+      console.warn('user failed auth', req.body.username, req.body.password);
       res.status(401).send();
     }
   });
@@ -102,6 +108,36 @@ app.get('/api/getUsers', function (req, res) {
     res.status(200).send(data);
   });
 });
+app.get('/api/getTeams', function (req, res) {
+  _UserLogin.default.find({}, function (err, users) {
+    var data = [];
+    users.forEach(function (user) {
+      data.push({
+        username: user.username,
+        teamId: user.teamId,
+        emoji: user.emoji
+      });
+    });
+    res.status(200).send(data);
+  });
+});
+app.post('/api/postPowerRankings', function (req, res) {
+  var week = _DateUtils.default.findWeekByDate(_moment.default.now());
+
+  console.log('found week', week);
+
+  if (false) {
+    PowerRankings.update({
+      teamId: req.body.teamId,
+      week: week
+    }, {
+      $set: {
+        rankings: [req.body.rankings]
+      }
+    });
+  }
+}); // TODO - Delete
+
 app.post('/powerRankings/makeUser', function (req, res) {
   if (req.body.username && req.body.password && req.body.passwordConf) {
     var userData = {

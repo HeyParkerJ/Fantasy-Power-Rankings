@@ -5,7 +5,10 @@ import path from 'path';
 import fs from 'fs';
 import UserLogin from './model/UserLogin'
 import mongoose from 'mongoose';
- 
+
+import Moment from 'moment'
+import DateUtils from './DateUtils'
+
 let Schema = mongoose.Schema;
 
 const app = express()
@@ -66,12 +69,18 @@ app.post('/api/login', (req, res) => {
   }
 
   UserLogin.find(userData, function(err, user) {
-    console.log(userData, user)
-    console.log('user.password', user[0].password, 'userData.password', userData.password)
     if(user[0].password === req.body.password) {
-      console.log('passed auth')
-      res.status(200).send(user)
+      console.log('user passed auth', user)
+
+      let data = {
+        teamId: user[0].teamId,
+        username: user[0].username,
+        emoji: user[0].emoji
+      }
+      
+      res.status(200).send(data)
     } else {
+      console.warn('user failed auth', req.body.username, req.body.password)
       res.status(401).send()
     }
   })
@@ -87,6 +96,31 @@ app.get('/api/getUsers', (req, res) => {
   })
 })
 
+app.get('/api/getTeams', (req, res) => {
+  UserLogin.find({}, function(err, users) {
+    let data = []
+    users.forEach((user) => {
+      data.push({username: user.username, teamId: user.teamId, emoji: user.emoji})
+    })
+
+    res.status(200).send(data);
+  })
+})
+
+app.post('/api/postPowerRankings', (req, res) => {
+  let week = DateUtils.findWeekByDate(Moment.now())
+
+  console.log('found week', week)
+
+  if(false) {
+    PowerRankings.update({teamId: req.body.teamId,
+                          week: week},
+                         { $set: { rankings: [ req.body.rankings ] } }
+                        )
+  }
+})
+
+// TODO - Delete
 app.post('/powerRankings/makeUser', (req, res) => {
   if(req.body.username &&
      req.body.password &&
