@@ -4,19 +4,19 @@ import Requests from './http/requests';
 class LoginButton extends Component {
 
   setUserToLogin = () => {
-    this.props.setUserToLogin(this.props.username)
+    this.props.setUserToLogin(this.props.user)
   }
 
   render() {
     return (
-      <button onClick={this.setUserToLogin}>{this.props.username}</button>
+      <button onClick={this.setUserToLogin}>{this.props.user.username}</button>
     )
   }
 }
 
 class LoginComponent extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       users: undefined,
       userToLogin: undefined,
@@ -29,13 +29,13 @@ class LoginComponent extends Component {
   }
 
   componentDidMount() {
-    Requests.getUsers().then((res) => {
+    Requests.getTeams().then((res) => {
       this.setState({users: res.data})
     })
   }
 
-  setUserToLogin = (event) => {
-    this.setState({userToLogin: event})
+  setUserToLogin = (user) => {
+    this.setState({userToLogin: user})
   }
 
   setLoginError = (err) => {
@@ -44,12 +44,13 @@ class LoginComponent extends Component {
 
   login = () => {
     let data = {
-      username: this.state.userToLogin,
+      username: this.state.userToLogin.username,
       password: this.state.password,
     }
 
     Requests.loginUser(data).then((res) => {
-      this.props.setUsername(res.data[0].username)
+      console.log('setting parent user item', res)
+      this.props.setUser(res.data)
     }).catch((err) => {
       this.setLoginError(err);
     })
@@ -58,8 +59,7 @@ class LoginComponent extends Component {
   RenderButtons = () => {
     let buttons = []
     this.state.users.forEach((user) => {
-      buttons.push(<LoginButton username={user.username}
-                   setUsername={this.props.setUsername}
+      buttons.push(<LoginButton user={user}
                    setUserToLogin={this.setUserToLogin}
                    setLoginError={this.setLoginError}/>)
     })

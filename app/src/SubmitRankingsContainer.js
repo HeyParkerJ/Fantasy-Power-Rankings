@@ -9,22 +9,24 @@ class SubmitRankingsContainer extends Component {
     super()
     this.state = {
       isLoggedIn: false,
-      username: undefined,
+      user: undefined,
+      username: '',
     }
   }
 
-  setUsername = (username) => {
-    this.setState({isLoggedIn: true, username: username})
+  setUser = (user) => {
+    console.log('setting state', user)
+    this.setState({isLoggedIn: true, user: user})
+    console.log('this.state', this.state)
   }
 
   render() {
-
     return (
         <div>
           <p>Submit rankings for the week. Closes on Thursday at 5pm Parker time.</p>
-          {this.state.isLoggedIn ?
-            <RankingSelectionContainer username={this.state.username}/> :
-            <LoginComponent setUsername={this.setUsername}/>}
+          {this.state.isLoggedIn && this.state.user ?
+            <RankingSelectionContainer user={this.state.user}/> :
+            <LoginComponent setUser={this.setUser}/>}
         </div>
     )
   }

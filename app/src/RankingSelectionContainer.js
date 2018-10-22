@@ -22,7 +22,7 @@ class RankingSelectionContainer extends Component {
     }
     return (
       <div>
-        <RankingSelection teams={this.state.teams}/>
+        <RankingSelection teams={this.state.teams} teamId={this.props.user.teamId}/>
       </div>
     )
   }

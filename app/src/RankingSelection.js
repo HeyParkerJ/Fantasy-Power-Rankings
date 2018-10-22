@@ -7,10 +7,10 @@ const SortableItem = SortableElement(
     <li>{value.username}</li>
 );
 
-const SortableList = SortableContainer(({items}) => {
+const SortableList = SortableContainer(({teams}) => {
   return (
     <ul>
-      {items.map((value, index) => (
+      {teams.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value}/>
       ))}
     </ul>
@@ -25,16 +25,15 @@ class RankingSelection extends Component {
     }
   }
 
-  componentDidMount() {
-    Requests.getTeams().then((res) => {
-      this.setState({orderedTeams: res.data})
-    })
-  }
-
   onSortEnd = ({oldIndex, newIndex}) => {
     this.setState({
       teams: arrayMove(this.state.teams, oldIndex, newIndex),
     })
+  }
+
+  submitPowerRankings = () => {
+    console.log('posting power rankings', this.props)
+    Requests.postPowerRankings({teamId: this.props.teamId, rankings: this.state.teams})
   }
 
   render() {
@@ -47,6 +46,9 @@ class RankingSelection extends Component {
     return (
       <div>
         {teams}
+        <div>
+          <button onClick={this.submitPowerRankings}>Submit Power Rankings</button>
+        </div>
       </div>
     )
   }

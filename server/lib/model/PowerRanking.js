@@ -6,7 +6,7 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var PowerRanking = new _mongoose.default.Schema({
   teamId: Number,
-  ranking: [{
+  rankings: [{
     teamId: Number
   }],
   date: {

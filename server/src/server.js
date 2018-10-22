@@ -68,7 +68,14 @@ app.post('/api/login', (req, res) => {
   UserLogin.find(userData, function(err, user) {
     if(user[0].password === req.body.password) {
       console.log('user passed auth', user)
-      res.status(200).send(user)
+
+      let data = {
+        teamId: user[0].teamId,
+        username: user[0].username,
+        emoji: user[0].emoji
+      }
+      
+      res.status(200).send(data)
     } else {
       console.warn('user failed auth', req.body.username, req.body.password)
       res.status(401).send()
@@ -97,6 +104,22 @@ app.get('/api/getTeams', (req, res) => {
   })
 })
 
+app.post('/api/postPowerRankings', (req, res) => {
+  let time = Date.now()
+
+  console.log('inside submitPowerRankings', req.body.teamId, req.body.rankings)
+
+  console.log(time)
+
+  if(false) {
+    PowerRankings.update({teamId: req.body.teamId,
+                          week: week},
+                         { $set: { rankings: [ req.body.rankings ] } }
+                        )
+  }
+})
+
+// TODO - Delete
 app.post('/powerRankings/makeUser', (req, res) => {
   if(req.body.username &&
      req.body.password &&
