@@ -8,8 +8,8 @@
   - Done!
 
 # Running app locally
-- In the app/ directory, simply run npm start
-- In the server/ directory, run npm start
+- In the app/ directory, simply run `npm start`
+- In the server/ directory, run `npm start`
   - Note: There's currently an issue ( #7 ) with hot reloading the server. This will need to be repeated until that bug is fixed.
 - In a third shell window, run `mongod`
 - Browse to `http://localhost:3000/` and you should be able to browse the application!
