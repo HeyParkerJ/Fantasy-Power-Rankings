@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import SubmitRankingsContainer from './SubmitRankingsContainer';
-import ViewPowerRankings from './ViewPowerRankings';
+import SubmitRankingsContainer from './SubmitRankingsContainer'
+import ViewPowerRankings from './ViewPowerRankings'
 import { Route, Link } from 'react-router-dom'
 
 class PowerRankings extends Component {
   constructor() {
     super()
-    this.state = {
-    }
+    this.state = {}
   }
-
 
   render() {
     return (
@@ -23,11 +21,14 @@ class PowerRankings extends Component {
             <Link to="/powerRankings/view">View Rankings</Link>
           </li>
         </ul>
-        <Route path="/powerRankings/submit" component={SubmitRankingsContainer}/>
-        <Route path="/powerRankings/view" component={ViewPowerRankings}/>
+        <Route
+          path="/powerRankings/submit"
+          component={SubmitRankingsContainer}
+        />
+        <Route path="/powerRankings/view" component={ViewPowerRankings} />
       </div>
     )
   }
 }
 
-export default PowerRankings;
+export default PowerRankings

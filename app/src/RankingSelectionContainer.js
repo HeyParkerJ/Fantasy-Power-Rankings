@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Requests from './http/requests';
-import RankingSelection from './RankingSelection';
+import React, { Component } from 'react'
+import Requests from './http/requests'
+import RankingSelection from './RankingSelection'
 
 class RankingSelectionContainer extends Component {
   constructor() {
@@ -11,21 +11,24 @@ class RankingSelectionContainer extends Component {
   }
 
   componentDidMount() {
-    Requests.getTeams().then((res) => {
-      this.setState({teams: res.data})
+    Requests.getTeams().then(res => {
+      this.setState({ teams: res.data })
     })
   }
 
   render() {
-    if(!this.state.teams) {
+    if (!this.state.teams) {
       return null
     }
     return (
       <div>
-        <RankingSelection teams={this.state.teams} teamId={this.props.user.teamId}/>
+        <RankingSelection
+          teams={this.state.teams}
+          teamId={this.props.user.teamId}
+        />
       </div>
     )
   }
 }
 
-export default RankingSelectionContainer;
+export default RankingSelectionContainer

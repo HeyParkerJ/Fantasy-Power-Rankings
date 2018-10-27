@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import DataDisplay from './DataDisplay';
-import Axios from 'axios';
+import React, { Component } from 'react'
+import DataDisplay from './DataDisplay'
+import Axios from 'axios'
 
 class SeasonContainer extends Component {
   constructor() {
@@ -11,20 +11,22 @@ class SeasonContainer extends Component {
   }
 
   handleClick = () => {
-    Axios.get('http://heyparkerj.com/data/'+this.props.season).then((res) => {
-      this.setState({data: res.data})
+    Axios.get('http://heyparkerj.com/data/' + this.props.season).then(res => {
+      this.setState({ data: res.data })
     })
   }
 
   render() {
-    let dataDisplay = this.state.data ? <DataDisplay data={this.state.data} /> : null
+    let dataDisplay = this.state.data ? (
+      <DataDisplay data={this.state.data} />
+    ) : null
     return (
       <div>
         <button onClick={this.handleClick}>{this.props.season}</button>
-        { dataDisplay }
+        {dataDisplay}
       </div>
     )
   }
 }
 
-export default SeasonContainer;
+export default SeasonContainer
