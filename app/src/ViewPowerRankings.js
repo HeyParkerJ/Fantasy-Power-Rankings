@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class ViewPowerRankings extends Component {
-
   constructor() {
     super()
-    this.state = {
-    }
+    this.state = {}
   }
 
   render() {
@@ -15,6 +13,5 @@ class ViewPowerRankings extends Component {
       </div>
     )
   }
-
 }
-export default ViewPowerRankings;
+export default ViewPowerRankings

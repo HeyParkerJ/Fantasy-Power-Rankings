@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import SeasonContainer from './SeasonContainer';
+import React, { Component } from 'react'
+import SeasonContainer from './SeasonContainer'
 
 class RawData extends Component {
   constructor() {
@@ -11,17 +11,13 @@ class RawData extends Component {
 
   render() {
     let seasonComponents = []
-    this.state.seasons.forEach((season) => {
+    this.state.seasons.forEach(season => {
       seasonComponents.push(
-          <SeasonContainer key={`seasonContainer-`+season} season={season} />
+        <SeasonContainer key={`seasonContainer-` + season} season={season} />
       )
     })
-    return (
-      <div className="RawData">
-        {seasonComponents}
-      </div>
-    );
+    return <div className="RawData">{seasonComponents}</div>
   }
 }
 
-export default RawData;
+export default RawData
