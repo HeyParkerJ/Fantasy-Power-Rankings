@@ -1,7 +1,25 @@
 import mongoose from 'mongoose';
 
-let PowerRanking = new mongoose.Schema({
-  teamId: Number,
-  rankings: [{teamId: Number}],
-  date: { type: Date, default: Date.now }
+let PowerRankingSchema = new mongoose.Schema({
+  teamId: {
+    type: Number,
+    required: true,
+  },
+  weekId: {
+    type: Number,
+    required: true,
+  },
+  rankings: {
+    type: Array,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
 })
+
+let PowerRanking = mongoose.model('PowerRanking', PowerRankingSchema);
+
+export default PowerRanking;

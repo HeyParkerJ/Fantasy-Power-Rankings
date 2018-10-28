@@ -12,9 +12,11 @@ var _path = _interopRequireDefault(require("path"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
 var _UserLogin = _interopRequireDefault(require("./model/UserLogin"));
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _PowerRanking = _interopRequireDefault(require("./model/PowerRanking"));
 
 var _moment = _interopRequireDefault(require("moment"));
 
@@ -122,20 +124,34 @@ app.get('/api/getTeams', function (req, res) {
   });
 });
 app.post('/api/postPowerRankings', function (req, res) {
-  var week = _DateUtils.default.findWeekByDate(_moment.default.now());
+  var currentTime = _moment.default.now();
 
-  console.log('found week', week);
+  var week = _DateUtils.default.determineWeekOfSubmission(currentTime);
 
-  if (false) {
-    PowerRankings.update({
-      teamId: req.body.teamId,
-      week: week
-    }, {
-      $set: {
-        rankings: [req.body.rankings]
-      }
-    });
-  }
+  var powerRankingData = {
+    week: week,
+    teamId: req.body.teamId,
+    rankings: req.body.rankings
+  };
+  var options = {
+    upsert: true
+  };
+
+  _PowerRanking.default.updateOne({
+    teamId: req.body.teamId,
+    weekId: week
+  }, {
+    $set: {
+      rankings: [req.body.rankings]
+    }
+  }, options, function (err, data) {
+    if (err) {
+      res.status(500).send('Something went wrong', err);
+    } else {
+      // TODO - this is a bit of a lie. Doesn't guarantee rankings were updated.
+      res.status(200).send('Successfully updated rankings');
+    }
+  });
 }); // TODO - Delete
 
 app.post('/powerRankings/makeUser', function (req, res) {

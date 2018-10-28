@@ -73,15 +73,34 @@ let weeks = [
   },
 ]
 
-export default {
-  isDateDuringGames(date) {
-    let returnWeek = null;
+function isDateDuringGames(date) {
+  weeks.forEach((week) => {
+    if(Moment(date).isBetween(week.gamesStartDate, week.gamesEndDate)) {
+      console.log('date', date, 'was in between', week.gamesStartDate, week.gamesEndDate)
+      return true
+    }
+  })
+  return false
+}
+
+function determineWeekOfSubmission(date) {
+  let isDateDuringGames = this.isDateDuringGames(date);
+  let weekOfSubmission 
+
+  if(!isDateDuringGames) {
     weeks.forEach((week) => {
-      if(Moment(date).isBetween(week.gamesStartDate, week.gamesEndDate)) {
-        console.log('date', date, 'was in between', week.gamesStartDate, week.gamesEndDate)
-        returnWeek = week
+      if(Moment(date).isBetween(week.weekStartDate, week.gamesEndDate)) {
+        weekOfSubmission = week.week;
       }
     })
-    return returnWeek
+  } else {
+    throw new Error('Not a valid submission time: '+date)
   }
+
+  return weekOfSubmission
+}
+
+export default {
+  isDateDuringGames,
+  determineWeekOfSubmission,
 }

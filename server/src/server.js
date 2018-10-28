@@ -3,8 +3,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import fs from 'fs';
-import UserLogin from './model/UserLogin'
+
 import mongoose from 'mongoose';
+import UserLogin from './model/UserLogin'
+import PowerRanking from './model/PowerRanking'
 
 import Moment from 'moment'
 import DateUtils from './DateUtils'
@@ -108,16 +110,39 @@ app.get('/api/getTeams', (req, res) => {
 })
 
 app.post('/api/postPowerRankings', (req, res) => {
-  let week = DateUtils.findWeekByDate(Moment.now())
+  let currentTime = Moment.now();
+  let week = DateUtils.determineWeekOfSubmission(currentTime)
 
-  console.log('found week', week)
 
-  if(false) {
-    PowerRankings.update({teamId: req.body.teamId,
-                          week: week},
-                         { $set: { rankings: [ req.body.rankings ] } }
-                        )
+  let powerRankingData = {
+    week: week,
+    teamId: req.body.teamId,
+    rankings: req.body.rankings,
   }
+
+  let options = {upsert: true}
+
+  PowerRanking.updateOne(
+    {
+      teamId: req.body.teamId,
+      weekId: week
+    },
+    {
+      $set: {
+        rankings: [
+          req.body.rankings
+        ]
+      }
+    },
+    options,
+    (err, data) => {
+      if(err) {
+        res.status(500).send('Something went wrong', err)
+      } else { // TODO - this is a bit of a lie. Doesn't guarantee rankings were updated.
+        res.status(200).send('Successfully updated rankings')
+      }
+    }
+  )
 })
 
 // TODO - Delete
