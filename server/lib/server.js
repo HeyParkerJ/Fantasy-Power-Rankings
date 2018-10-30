@@ -152,6 +152,22 @@ app.post('/api/postPowerRankings', function (req, res) {
       res.status(200).send('Successfully updated rankings');
     }
   });
+});
+app.get('/api/getPowerRankings', function (req, res) {
+  var currentTime = _moment.default.now();
+
+  var week = _DateUtils.default.determineWeekOfSubmission(currentTime);
+
+  var query = {
+    weekId: week
+  };
+  var data;
+
+  _PowerRanking.default.find(query, function (err, rankings) {
+    console.log('rankings', rankings);
+    data = rankings;
+    res.status(200).send(data);
+  });
 }); // TODO - Delete
 
 app.post('/powerRankings/makeUser', function (req, res) {
