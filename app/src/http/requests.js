@@ -62,9 +62,9 @@ export default {
     })
   },
 
-  getPowerRankings: (powerRankings) => {
+  getAllPowerRankings: (powerRankings) => {
     return new Promise((resolve, reject) => {
-      Axios.get(url + 'api/getPowerRankings')
+      Axios.get(url + 'api/getAllPowerRankings')
         .then(response => {
           resolve(response.data)
         })

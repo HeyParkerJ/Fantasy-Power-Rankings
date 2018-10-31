@@ -150,17 +150,17 @@ app.post('/api/postPowerRankings', (req, res) => {
   )
 })
 
-app.get('/api/getPowerRankings', (req, res) => {
-  let currentTime = Moment.now()
-  let week = DateUtils.determineWeekOfSubmission(currentTime)
+app.get('/api/getAllPowerRankings', (req, res) => {
+  PowerRanking.find({}, (err, rankings) => {
+    let formattedData = {}
 
-  let query = { weekId: week }
-  let data
+    rankings.forEach(d => {
+      let weekId = d.weekId
+      formattedData[weekId] = formattedData[weekId] || []
+      formattedData[weekId].push(d)
+    })
 
-  PowerRanking.find(query, (err, rankings) => {
-    console.log('rankings', rankings)
-    data = rankings
-    res.status(200).send(data)
+    res.status(200).send(formattedData)
   })
 })
 
