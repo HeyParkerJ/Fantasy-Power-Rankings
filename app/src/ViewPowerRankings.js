@@ -50,7 +50,7 @@ class ViewPowerRankings extends Component {
   }
 
   componentDidMount() {
-    Requests.getPowerRankings().then(res => {
+    Requests.getAllPowerRankings().then(res => {
       this.setState({ rankingsList: res })
     })
   }
