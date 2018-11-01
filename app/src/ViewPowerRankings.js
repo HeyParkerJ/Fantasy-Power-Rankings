@@ -49,6 +49,23 @@ class ViewPowerRankings extends Component {
     return rankings
   }
 
+  componentDidMount() {
+    Requests.getPowerRankings().then(res => {
+      this.setState({ rankingsList: res })
+    })
+  }
+
+  renderRankings = () => {
+    let rankingsDiv = []
+    if(this.state.rankingsList) {
+      this.state.rankingsList.forEach((ranking) => {
+        rankingsDiv.push(<PowerRankingComponent key={ ranking.teamId } ranking={ranking}/>)
+      })
+    } else {
+      rankingsDiv.push(<p>Imagine these are the power rankings</p>)
+    }
+    return rankingsDiv
+  }
   render() {
     return (
       <div>
