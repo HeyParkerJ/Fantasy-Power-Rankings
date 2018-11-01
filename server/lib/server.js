@@ -25,10 +25,10 @@ var _DateUtils = _interopRequireDefault(require("./DateUtils"));
 var Schema = _mongoose.default.Schema;
 var app = (0, _express.default)();
 app.use(_bodyParser.default.json({
-  limit: "50mb"
+  limit: '50mb'
 }));
 app.use(_bodyParser.default.urlencoded({
-  limit: "50mb",
+  limit: '50mb',
   extended: true,
   paremeterLimit: 50000
 }));
@@ -46,11 +46,11 @@ db.once('open', function () {
 app.use((0, _cors.default)());
 app.get('/data/test', function (req, res) {
   res.send({
-    "hello": "world",
-    "name": "parker Johnson",
-    "data": {
-      "data1": "true",
-      "data2": false
+    hello: 'world',
+    name: 'parker Johnson',
+    data: {
+      data1: 'true',
+      data2: false
     }
   });
 });
@@ -153,20 +153,15 @@ app.post('/api/postPowerRankings', function (req, res) {
     }
   });
 });
-app.get('/api/getPowerRankings', function (req, res) {
-  var currentTime = _moment.default.now();
-
-  var week = _DateUtils.default.determineWeekOfSubmission(currentTime);
-
-  var query = {
-    weekId: week
-  };
-  var data;
-
-  _PowerRanking.default.find(query, function (err, rankings) {
-    console.log('rankings', rankings);
-    data = rankings;
-    res.status(200).send(data);
+app.get('/api/getAllPowerRankings', function (req, res) {
+  _PowerRanking.default.find({}, function (err, rankings) {
+    var formattedData = {};
+    rankings.forEach(function (d) {
+      var weekId = d.weekId;
+      formattedData[weekId] = formattedData[weekId] || [];
+      formattedData[weekId].push(d);
+    });
+    res.status(200).send(formattedData);
   });
 }); // TODO - Delete
 
