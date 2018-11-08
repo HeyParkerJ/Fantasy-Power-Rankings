@@ -69,29 +69,31 @@ var weeks = [{
 }];
 
 function isDateDuringGames(date) {
+  var weekIsBetweenGames = false;
   weeks.forEach(function (week) {
     if ((0, _moment.default)(date).isBetween(week.gamesStartDate, week.gamesEndDate)) {
-      console.log('date', date, 'was in between', week.gamesStartDate, week.gamesEndDate);
-      return true;
+      weekIsBetweenGames = true;
     }
   });
-  return false;
+  return weekIsBetweenGames;
 }
 
 function determineWeekOfSubmission(date) {
   var isDateDuringGames = this.isDateDuringGames(date);
   var weekOfSubmission;
+  console.log('isdateduringgames', isDateDuringGames);
 
-  if (!isDateDuringGames) {
+  if (isDateDuringGames) {
+    throw new Error('Not a valid submission time: ' + date);
+  } else {
     weeks.forEach(function (week) {
       if ((0, _moment.default)(date).isBetween(week.weekStartDate, week.gamesEndDate)) {
         weekOfSubmission = week.week;
       }
     });
-  } else {
-    throw new Error('Not a valid submission time: ' + date);
   }
 
+  console.log('week of submission', weekOfSubmission);
   return weekOfSubmission;
 }
 

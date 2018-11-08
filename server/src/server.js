@@ -118,7 +118,19 @@ app.get('/api/getTeams', (req, res) => {
 
 app.post('/api/postPowerRankings', (req, res) => {
   let currentTime = Moment.now()
-  let week = DateUtils.determineWeekOfSubmission(currentTime)
+  let week
+  try {
+    week = DateUtils.determineWeekOfSubmission(currentTime)
+  } catch (err) {
+    console.error(
+      'Rankings were submitted while submissions are closed',
+      Moment(currentTime),
+      req.body
+    )
+    return res
+      .status(500)
+      .send('Not allowed to send subimssions during gametime')
+  }
 
   let powerRankingData = {
     week: week,
