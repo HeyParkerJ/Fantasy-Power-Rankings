@@ -25,6 +25,23 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.2",
-    "nodemon": "^1.18.4"
+    "husky": "^1.1.2",
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.14.3"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

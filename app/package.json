@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.3.2",
     "axios": "^0.18.0",
+    "mdbreact": "^4.8.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-json-view": "^1.19.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
-    "react-sortable-hoc": "^0.8.3"
+    "react-sortable-hoc": "^0.8.3",
+    "reactstrap": "^6.5.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,5 +34,15 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^1.14.3",
+    "husky": "^1.1.2",
+    "lint-staged": "^7.3.0"
+  }
 }

@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
-import Requests from './http/requests';
+import React, { Component } from 'react'
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove
+} from 'react-sortable-hoc'
+import Requests from './http/requests'
 
-const SortableItem = SortableElement(
-  ({value}) =>
-    <li>{value.username}</li>
-);
+const SortableItem = SortableElement(({ value }) => <li>{value.username}</li>)
 
-const SortableList = SortableContainer(({teams}) => {
+const SortableList = SortableContainer(({ teams }) => {
   return (
     <ul>
       {teams.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value}/>
+        <SortableItem key={`item-${index}`} index={index} value={value} />
       ))}
     </ul>
   )
@@ -25,33 +26,38 @@ class RankingSelection extends Component {
     }
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
-      teams: arrayMove(this.state.teams, oldIndex, newIndex),
+      teams: arrayMove(this.state.teams, oldIndex, newIndex)
     })
   }
 
   submitPowerRankings = () => {
     console.log('posting power rankings', this.props)
-    Requests.postPowerRankings({teamId: this.props.teamId, rankings: this.state.teams})
+    Requests.postPowerRankings({
+      teamId: this.props.teamId,
+      rankings: this.state.teams
+    })
   }
 
   render() {
     let teams = null
-    if(this.state.teams) {
+    if (this.state.teams) {
       teams = (
-        <SortableList teams={this.state.teams} onSortEnd={this.onSortEnd}/>
+        <SortableList teams={this.state.teams} onSortEnd={this.onSortEnd} />
       )
     }
     return (
       <div>
         {teams}
         <div>
-          <button onClick={this.submitPowerRankings}>Submit Power Rankings</button>
+          <button onClick={this.submitPowerRankings}>
+            Submit Power Rankings
+          </button>
         </div>
       </div>
     )
   }
 }
 
-export default RankingSelection;
+export default RankingSelection

@@ -12,9 +12,11 @@ var _path = _interopRequireDefault(require("path"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
 var _UserLogin = _interopRequireDefault(require("./model/UserLogin"));
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _PowerRanking = _interopRequireDefault(require("./model/PowerRanking"));
 
 var _moment = _interopRequireDefault(require("moment"));
 
@@ -23,10 +25,10 @@ var _DateUtils = _interopRequireDefault(require("./DateUtils"));
 var Schema = _mongoose.default.Schema;
 var app = (0, _express.default)();
 app.use(_bodyParser.default.json({
-  limit: "50mb"
+  limit: '50mb'
 }));
 app.use(_bodyParser.default.urlencoded({
-  limit: "50mb",
+  limit: '50mb',
   extended: true,
   paremeterLimit: 50000
 }));
@@ -44,11 +46,11 @@ db.once('open', function () {
 app.use((0, _cors.default)());
 app.get('/data/test', function (req, res) {
   res.send({
-    "hello": "world",
-    "name": "parker Johnson",
-    "data": {
-      "data1": "true",
-      "data2": false
+    hello: 'world',
+    name: 'parker Johnson',
+    data: {
+      data1: 'true',
+      data2: false
     }
   });
 });
@@ -122,20 +124,52 @@ app.get('/api/getTeams', function (req, res) {
   });
 });
 app.post('/api/postPowerRankings', function (req, res) {
-  var week = _DateUtils.default.findWeekByDate(_moment.default.now());
+  var currentTime = _moment.default.now();
 
-  console.log('found week', week);
+  var week;
 
-  if (false) {
-    PowerRankings.update({
-      teamId: req.body.teamId,
-      week: week
-    }, {
-      $set: {
-        rankings: [req.body.rankings]
-      }
-    });
+  try {
+    week = _DateUtils.default.determineWeekOfSubmission(currentTime);
+  } catch (err) {
+    console.error('Rankings were submitted while submissions are closed', (0, _moment.default)(currentTime), req.body);
+    return res.status(500).send('Not allowed to send subimssions during gametime');
   }
+
+  var powerRankingData = {
+    week: week,
+    teamId: req.body.teamId,
+    rankings: req.body.rankings
+  };
+  var options = {
+    upsert: true
+  };
+
+  _PowerRanking.default.updateOne({
+    teamId: req.body.teamId,
+    weekId: week
+  }, {
+    $set: {
+      rankings: [req.body.rankings]
+    }
+  }, options, function (err, data) {
+    if (err) {
+      res.status(500).send('Something went wrong', err);
+    } else {
+      // TODO - this is a bit of a lie. Doesn't guarantee rankings were updated.
+      res.status(200).send('Successfully updated rankings');
+    }
+  });
+});
+app.get('/api/getAllPowerRankings', function (req, res) {
+  _PowerRanking.default.find({}, function (err, rankings) {
+    var formattedData = {};
+    rankings.forEach(function (d) {
+      var weekId = d.weekId;
+      formattedData[weekId] = formattedData[weekId] || [];
+      formattedData[weekId].push(d);
+    });
+    res.status(200).send(formattedData);
+  });
 }); // TODO - Delete
 
 app.post('/powerRankings/makeUser', function (req, res) {

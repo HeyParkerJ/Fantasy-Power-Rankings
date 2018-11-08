@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import Requests from './http/requests';
+import React, { Component } from 'react'
+import Requests from './http/requests'
+import Button from '@material-ui/core/Button';
 
 class LoginButton extends Component {
-
   setUserToLogin = () => {
     this.props.setUserToLogin(this.props.user)
   }
 
   render() {
     return (
-      <button onClick={this.setUserToLogin}>{this.props.user.username}</button>
+      <Button variant="contained" color="primary" space="2" onClick={this.setUserToLogin}>{this.props.user.username}</Button>
     )
   }
 }
@@ -21,57 +21,63 @@ class LoginComponent extends Component {
       users: undefined,
       userToLogin: undefined,
       password: '',
-      error: null,
+      error: null
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    Requests.getTeams().then((res) => {
-      this.setState({users: res.data})
+    Requests.getTeams().then(res => {
+      this.setState({ users: res.data })
     })
   }
 
-  setUserToLogin = (user) => {
-    this.setState({userToLogin: user})
+  setUserToLogin = user => {
+    this.setState({ userToLogin: user })
   }
 
-  setLoginError = (err) => {
-    this.setState({error: err.message})
+  setLoginError = err => {
+    this.setState({ error: err.message })
   }
 
   login = () => {
     let data = {
       username: this.state.userToLogin.username,
-      password: this.state.password,
+      password: this.state.password
     }
 
-    Requests.loginUser(data).then((res) => {
-      console.log('setting parent user item', res)
-      this.props.setUser(res.data)
-    }).catch((err) => {
-      this.setLoginError(err);
-    })
+    Requests.loginUser(data)
+      .then(res => {
+        console.log('setting parent user item', res)
+        this.props.setUser(res.data)
+      })
+      .catch(err => {
+        this.setLoginError(err)
+      })
   }
 
   RenderButtons = () => {
     let buttons = []
-    this.state.users.forEach((user) => {
-      buttons.push(<LoginButton user={user}
-                   setUserToLogin={this.setUserToLogin}
-                   setLoginError={this.setLoginError}/>)
+    this.state.users.forEach(user => {
+      buttons.push(
+        <LoginButton
+          user={user}
+          setUserToLogin={this.setUserToLogin}
+          setLoginError={this.setLoginError}
+        />
+      )
     })
-    return buttons;
+    return buttons
   }
 
   handleChange(event) {
-    this.setState({password: event.target.value})
+    this.setState({ password: event.target.value })
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     this.login()
   }
 
@@ -81,11 +87,11 @@ class LoginComponent extends Component {
     let error = null
     let loginForm = null
 
-    if(this.state.users) {
-      buttons = this.RenderButtons(); 
+    if (this.state.users) {
+      buttons = this.RenderButtons()
     }
 
-    if(this.state.error) {
+    if (this.state.error) {
       error = (
         <div>
           <p>Try not to mess this up, we got an error from the server:</p>
@@ -94,13 +100,18 @@ class LoginComponent extends Component {
       )
     }
 
-    if(this.state.userToLogin) {
+    if (this.state.userToLogin) {
       loginForm = (
         <form onSubmit={this.handleSubmit}>
-          <label>Password:
-            <input type="test" value={this.state.password} onChange={this.handleChange}/>
+          <label>
+            Password:
+            <input
+              type="test"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
           </label>
-            <input type="submit" value="Login"/>
+          <input type="submit" value="Login" />
         </form>
       )
     }
@@ -116,4 +127,4 @@ class LoginComponent extends Component {
   }
 }
 
-export default LoginComponent;
+export default LoginComponent
