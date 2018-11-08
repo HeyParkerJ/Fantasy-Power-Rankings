@@ -1,50 +1,11 @@
 import React, { Component } from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import Grid from '@material-ui/core/Grid'
+
 import { withStyles } from '@material-ui/core/styles';
 
-class PowerRankingComponent extends Component {
-
-  renderVoter = () => {
-    let team
-
-    this.props.users.forEach((t) => {
-      if(t.teamId === this.props.ranking.teamId) {
-        team = t
-      }
-    })
-
-    return (<CardHeader title={`Submitter: ` + team.username}></CardHeader>)
-  }
-
-  renderRankings = () => {
-    let rankings = this.props.ranking.rankings[0]
-    let rankingLines = []
-    rankings.forEach((r, index) => {
-      //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
-      rankingLines.push(
-          <div>
-            {index+1}: {r.username}
-          </div>
-      )
-    })
-    return (
-        <div>
-          {rankingLines}
-        </div>
-    )
-  }
-
-  render() {
-    return (
-      <Card style={{maxWidth: '275'}}>
-        { this.renderVoter() }
-        { this.renderRankings() }
-      </Card>
-    )
-  }
-}
-let renderVoter = (users, teamId) => {
+const renderVoter = (users, teamId) => {
   let team
 
   users.forEach((t) => {
@@ -56,7 +17,7 @@ let renderVoter = (users, teamId) => {
   return (<CardHeader title={`Submitter: ` + team.username}></CardHeader>)
 }
 
-let renderRankings = (rankings) => {
+const renderRankings = (rankings) => {
   console.log(rankings)
   rankings = rankings.rankings[0]
   let rankingLines = []
@@ -81,15 +42,17 @@ const styles = {
   }
 }
 
-let FNpowerRankingComponent = (props) => {
+let PowerRankingComponent = (props) => {
   const { classes } = props
 
   return (
-    <Card className={classes.card}>
-      { renderVoter(props.users, props.ranking.teamId) }
-      { renderRankings(props.ranking) }
-    </Card>
+    <Grid item>
+      <Card className={classes.card}>
+        { renderVoter(props.users, props.ranking.teamId) }
+        { renderRankings(props.ranking) }
+      </Card>
+    </Grid>
   )
 }
 
-export default withStyles(styles)(FNpowerRankingComponent)
+export default withStyles(styles)(PowerRankingComponent)
