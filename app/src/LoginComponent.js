@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Requests from './http/requests'
+import Button from '@material-ui/core/Button';
 
 class LoginButton extends Component {
   setUserToLogin = () => {
@@ -8,7 +9,7 @@ class LoginButton extends Component {
 
   render() {
     return (
-      <button onClick={this.setUserToLogin}>{this.props.user.username}</button>
+      <Button variant="contained" color="primary" space="2" onClick={this.setUserToLogin}>{this.props.user.username}</Button>
     )
   }
 }

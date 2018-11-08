@@ -9,6 +9,7 @@ class ViewPowerRankings extends Component {
     this.state = {
       rankingsList: null,
       selectedWeek: null,
+      users: null,
       // TODO - make latest
     }
   }
@@ -16,6 +17,10 @@ class ViewPowerRankings extends Component {
   componentDidMount() {
     Requests.getAllPowerRankings().then(res => {
       this.setState({ rankingsList: res })
+    })
+
+    Requests.getTeams().then(res => {
+      this.setState({ users: res.data })
     })
   }
 
@@ -43,16 +48,10 @@ class ViewPowerRankings extends Component {
 
     if(this.state.selectedWeek && this.state.rankingsList) {
       this.state.rankingsList[this.state.selectedWeek].forEach((ranking) => {
-        rankings.push(<PowerRankingComponent key={ranking.teamId} ranking={ranking} />)
+        rankings.push(<PowerRankingComponent key={ranking.teamId} ranking={ranking} users={this.state.users} />)
       })
     }
     return rankings
-  }
-
-  componentDidMount() {
-    Requests.getAllPowerRankings().then(res => {
-      this.setState({ rankingsList: res })
-    })
   }
 
   renderRankings = () => {
