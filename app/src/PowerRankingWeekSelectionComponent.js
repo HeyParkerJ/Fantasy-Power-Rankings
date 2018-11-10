@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Requests from './http/requests'
 
 class PowerRankingWeekSelectionComponent extends Component {
 
@@ -7,7 +6,7 @@ class PowerRankingWeekSelectionComponent extends Component {
     let weeks = []
 
     this.props.weeks.forEach((week) => {
-      weeks.push(<button onClick={ () => {this.props.handleClick(week)} } >{week}</button>)
+      weeks.push(<button key={week} onClick={ () => {this.props.handleClick(week)} } >{week}</button>)
     })
 
     return weeks

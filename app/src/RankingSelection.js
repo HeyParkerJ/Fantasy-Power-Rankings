@@ -10,8 +10,8 @@ const SortableItem = SortableElement(({ value, sortIndex }) =>
                                      <li style={{"listStyleType":"none",
                                                  "border":"1px solid black",
                                                  "maxWidth": "85px",
-                                                 "margin-top": "2px",
-                                                 "margin-bottom": "2px",
+                                                 "marginTop": "2px",
+                                                 "marginBottom": "2px",
                                                 }}>
                                        {sortIndex+1}: {value.username}
                                      </li>)

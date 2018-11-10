@@ -12,6 +12,7 @@ class LoginButton extends Component {
   render() {
     return (
       <Button
+        key={this.props.user.teamId}
         variant="contained"
         color="primary"
         space="2"
@@ -70,7 +71,8 @@ class LoginComponent extends Component {
     let buttons = []
     this.state.users.forEach(user => {
       buttons.push(
-        <Grid item>
+        <Grid item
+              key={user.teamId}>
           <LoginButton
             user={user}
             setUserToLogin={this.setUserToLogin}
@@ -112,7 +114,8 @@ class LoginComponent extends Component {
 
     if (this.state.userToLogin) {
       loginForm = (
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}
+              style={{"marginTop": "10px"}} >
           <label>
             Password:
             <input
@@ -131,8 +134,8 @@ class LoginComponent extends Component {
         {error}
         <p>Which of these idiots you is?</p>
         <Grid container
-              spacing={8}>
-        {buttons}
+              spacing={8} >
+          {buttons}
         </Grid>
         {loginForm}
       </div>
