@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-import Grid from '@material-ui/core/Grid'
 
 import { withStyles } from '@material-ui/core/styles';
 
 const renderRankings = (rankings) => {
   let rankingRows = []
 
-  // We want to keep the placements as an object to make averaging easier, but now we need it to
-  // be an array so we can sort efficiently
+  // We want to keep the placements as an object to make averaging & data storage easier,
+  // but now we need it to be an array so we can sort and loop efficiently
   let placementsArray = []
   for (let placement in rankings) {
     placementsArray.push(rankings[placement])
@@ -22,7 +21,7 @@ const renderRankings = (rankings) => {
   placementsArray.forEach((r, index) => {
     //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
     rankingRows.push(
-      <div>
+      <div key={index+1}>
         {index+1}: {r.username} ({r.rankingsAverage})
       </div>
     )

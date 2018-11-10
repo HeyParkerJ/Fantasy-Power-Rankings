@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import PowerRankingsAggregateCard from './PowerRankingsAggregateCard'
 

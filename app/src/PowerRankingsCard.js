@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import Grid from '@material-ui/core/Grid'
@@ -23,7 +23,7 @@ const renderRankings = (rankings) => {
   rankings.forEach((r, index) => {
     //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
     rankingRows.push(
-      <div>
+      <div key={index+1}>
         {index+1}: {r.username}
       </div>
     )
