@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Requests from './http/requests'
 import PowerRankingWeekSelectionComponent from './PowerRankingWeekSelectionComponent'
-import PowerRankingComponent from './PowerRankingComponent'
+import PowerRankingsCard from './PowerRankingsCard'
 import Grid from '@material-ui/core/Grid'
+import AggregatePowerRankingsContainer from './AggregatePowerRankingsContainer'
 
 class ViewPowerRankings extends Component {
   constructor() {
@@ -49,27 +50,43 @@ class ViewPowerRankings extends Component {
 
     if(this.state.selectedWeek && this.state.rankingsList) {
       this.state.rankingsList[this.state.selectedWeek].forEach((ranking) => {
-        rankings.push(<PowerRankingComponent key={ranking.teamId} ranking={ranking} users={this.state.users} />)
+        rankings.push(<PowerRankingsCard key={ranking.teamId} rankings={ranking} users={this.state.users} />)
       })
     }
     return rankings
+  }
+
+  renderAggregatePowerRankingsContainer = () => {
+    if(this.state.selectedWeek && this.state.rankingsList) {
+      return <AggregatePowerRankingsContainer rankings={this.state.rankingsList[this.state.selectedWeek]}/>
+    } else {
+      return null
+    }
   }
 
   renderRankings = () => {
     let rankingsDiv = []
     if(this.state.rankingsList) {
       this.state.rankingsList.forEach((ranking) => {
-        rankingsDiv.push(<PowerRankingComponent key={ ranking.teamId } ranking={ranking}/>)
+        rankingsDiv.push(<PowerRankingsCard key={ ranking.teamId } ranking={ranking}/>)
       })
     } else {
       rankingsDiv.push(<p>Imagine these are the power rankings</p>)
     }
     return rankingsDiv
   }
+
   render() {
     return (
       <div>
         {this.renderWeekSelection()}
+        <Grid
+          container
+          justify='center'
+        >
+          {this.renderAggregatePowerRankingsContainer()}
+        </Grid>
+
         <Grid
           container
           direction='row'

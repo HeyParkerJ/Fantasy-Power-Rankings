@@ -18,12 +18,11 @@ const renderVoter = (users, teamId) => {
 }
 
 const renderRankings = (rankings) => {
-  console.log(rankings)
   rankings = rankings.rankings[0]
-  let rankingLines = []
+  let rankingRows = []
   rankings.forEach((r, index) => {
     //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
-    rankingLines.push(
+    rankingRows.push(
       <div>
         {index+1}: {r.username}
       </div>
@@ -31,7 +30,7 @@ const renderRankings = (rankings) => {
   })
   return (
     <div>
-      {rankingLines}
+      {rankingRows}
     </div>
   )
 }
@@ -42,17 +41,17 @@ const styles = {
   }
 }
 
-let PowerRankingComponent = (props) => {
+let PowerRankingsCard = (props) => {
   const { classes } = props
 
   return (
     <Grid item>
       <Card className={classes.card}>
-        { renderVoter(props.users, props.ranking.teamId) }
-        { renderRankings(props.ranking) }
+        { renderVoter(props.users, props.rankings.teamId) }
+        { renderRankings(props.rankings) }
       </Card>
     </Grid>
   )
 }
 
-export default withStyles(styles)(PowerRankingComponent)
+export default withStyles(styles)(PowerRankingsCard)
