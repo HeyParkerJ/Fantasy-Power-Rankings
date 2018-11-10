@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
 import Requests from './http/requests'
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid'
 
 class LoginButton extends Component {
+
   setUserToLogin = () => {
     this.props.setUserToLogin(this.props.user)
   }
 
   render() {
     return (
-      <Button variant="contained" color="primary" space="2" onClick={this.setUserToLogin}>{this.props.user.username}</Button>
+      <Button
+        variant="contained"
+        color="primary"
+        space="2"
+        onClick={this.setUserToLogin}
+      >
+        {this.props.user.username}
+      </Button>
     )
   }
 }
@@ -50,7 +59,6 @@ class LoginComponent extends Component {
 
     Requests.loginUser(data)
       .then(res => {
-        console.log('setting parent user item', res)
         this.props.setUser(res.data)
       })
       .catch(err => {
@@ -62,11 +70,13 @@ class LoginComponent extends Component {
     let buttons = []
     this.state.users.forEach(user => {
       buttons.push(
-        <LoginButton
-          user={user}
-          setUserToLogin={this.setUserToLogin}
-          setLoginError={this.setLoginError}
-        />
+        <Grid item>
+          <LoginButton
+            user={user}
+            setUserToLogin={this.setUserToLogin}
+            setLoginError={this.setLoginError}
+          />
+        </Grid>
       )
     })
     return buttons
@@ -120,7 +130,10 @@ class LoginComponent extends Component {
       <div>
         {error}
         <p>Which of these idiots you is?</p>
+        <Grid container
+              spacing={8}>
         {buttons}
+        </Grid>
         {loginForm}
       </div>
     )

@@ -13,9 +13,7 @@ class SubmitRankingsContainer extends Component {
   }
 
   setUser = user => {
-    console.log('setting state', user)
     this.setState({ isLoggedIn: true, user: user })
-    console.log('this.state', this.state)
   }
 
   render() {
