@@ -1,40 +1,50 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import RawData from './RawData'
 import PowerRankings from './PowerRankings'
+import AppBar from '@material-ui/core/AppBar'
+
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-    <p>
-      To be honest I'm not sure what this segment is gonna look like yet but it
-      should probably be here. Pick something else
-    </p>
-  </div>
-)
+class TabsContainer extends Component {
+  state = {
+    selectedTab: 0
+  }
 
-const App = () => (
-  <Router>
-    <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/raw">Raw Data</Link>
-        </li>
-        <li>
-          <Link to="/powerRankings">Power Rankings</Link>
-        </li>
-      </ul>
+  handleTabClick = (event, value) => {
+    this.setState({selectedTab: value})
+  }
 
-      <Route exact path="/" component={Home} />
-      <Route path="/raw" component={RawData} />
-      <Route path="/powerRankings" component={PowerRankings} />
-    </div>
-  </Router>
-)
+  render() {
+    return (
+      <Tabs value={this.state.selectedTab} onChange={this.handleTabClick}>
+        <Tab label="Power Rankings" component={Link} to="/powerRankings"/>
+        <Tab label="Raw Data" component={Link} to="/raw"/>
+      </Tabs>
+    )
+  }
+}
+
+class App extends Component {
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <AppBar position="static" color="default">
+            <TabsContainer />
+          </AppBar>
+
+          <Route exact path="/" component={PowerRankings} />
+          <Route path="/raw" component={RawData} />
+          <Route path="/powerRankings" component={PowerRankings} />
+        </div>
+      </Router>
+    )
+  }
+}
 
 export default App
