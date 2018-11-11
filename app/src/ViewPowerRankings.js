@@ -18,10 +18,15 @@ class ViewPowerRankings extends Component {
 
   componentDidMount() {
     Requests.getAllPowerRankings().then(res => {
-      this.setState({ rankingsList: res })
+      let weeks = Object.keys(res).sort()
+      this.setState({
+          rankingsList: res,
+          selectedWeek: weeks[weeks.length-1]
+        })
     })
 
     Requests.getTeams().then(res => {
+      console.log(res)
       this.setState({ users: res.data })
     })
   }
@@ -42,13 +47,13 @@ class ViewPowerRankings extends Component {
       return <p>Placeholder until we get the weeks back</p>
     }
 
-    return <PowerRankingWeekSelectionComponent weeks={weeksWithSubmissions} handleClick={this.setWeekToDisplay}/>
+    return <PowerRankingWeekSelectionComponent weeks={weeksWithSubmissions} setWeekToDisplay={this.setWeekToDisplay}/>
   }
 
   renderSelectedWeek = () => {
     let rankings = []
 
-    if(this.state.selectedWeek && this.state.rankingsList) {
+    if(this.state.selectedWeek && this.state.rankingsList && this.state.users) {
       this.state.rankingsList[this.state.selectedWeek].forEach((ranking) => {
         rankings.push(<PowerRankingsCard key={ranking.teamId} rankings={ranking} users={this.state.users} />)
       })
@@ -57,7 +62,7 @@ class ViewPowerRankings extends Component {
   }
 
   renderAggregatePowerRankingsContainer = () => {
-    if(this.state.selectedWeek && this.state.rankingsList) {
+    if(this.state.selectedWeek && this.state.rankingsList && this.state.users) {
       return <AggregatePowerRankingsContainer rankings={this.state.rankingsList[this.state.selectedWeek]}/>
     } else {
       return null

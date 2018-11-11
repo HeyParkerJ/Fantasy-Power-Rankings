@@ -5,16 +5,17 @@ import {
   arrayMove
 } from 'react-sortable-hoc'
 import Requests from './http/requests'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
 
 const SortableItem = SortableElement(({ value, sortIndex }) =>
-                                     <li style={{"listStyleType":"none",
-                                                 "border":"1px solid black",
+                                     <Paper style={{
                                                  "maxWidth": "85px",
-                                                 "marginTop": "2px",
-                                                 "marginBottom": "2px",
+                                                 "marginTop": "4px",
+                                                 "marginBottom": "4px",
                                                 }}>
                                        {sortIndex+1}: {value.username}
-                                     </li>)
+                                     </Paper>)
 
 const SortableList = SortableContainer(({ teams }) => {
   return (
@@ -59,9 +60,13 @@ class RankingSelection extends Component {
         <div style={{'color':'red'}}>Drag and drop, then click submit</div>
         {teams}
         <div>
-          <button onClick={this.submitPowerRankings}>
+          <Button
+            onClick={this.submitPowerRankings}
+            color="primary"
+            variant="contained"
+          >
             Submit Power Rankings
-          </button>
+          </Button>
         </div>
       </div>
     )
