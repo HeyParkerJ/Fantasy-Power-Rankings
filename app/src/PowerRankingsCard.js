@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import Grid from '@material-ui/core/Grid'
@@ -18,20 +18,19 @@ const renderVoter = (users, teamId) => {
 }
 
 const renderRankings = (rankings) => {
-  console.log(rankings)
   rankings = rankings.rankings[0]
-  let rankingLines = []
+  let rankingRows = []
   rankings.forEach((r, index) => {
     //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
-    rankingLines.push(
-      <div>
+    rankingRows.push(
+      <div key={index+1}>
         {index+1}: {r.username}
       </div>
     )
   })
   return (
     <div>
-      {rankingLines}
+      {rankingRows}
     </div>
   )
 }
@@ -42,17 +41,17 @@ const styles = {
   }
 }
 
-let PowerRankingComponent = (props) => {
+let PowerRankingsCard = (props) => {
   const { classes } = props
 
   return (
     <Grid item>
       <Card className={classes.card}>
-        { renderVoter(props.users, props.ranking.teamId) }
-        { renderRankings(props.ranking) }
+        { renderVoter(props.users, props.rankings.teamId) }
+        { renderRankings(props.rankings) }
       </Card>
     </Grid>
   )
 }
 
-export default withStyles(styles)(PowerRankingComponent)
+export default withStyles(styles)(PowerRankingsCard)
