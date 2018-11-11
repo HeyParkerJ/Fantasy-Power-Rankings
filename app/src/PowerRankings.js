@@ -8,11 +8,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 class PowerRankings extends Component {
-  constructor() {
-    super()
-    this.state = {
-      selectedTab: null
-    }
+  state = {
+    selectedTab: 0
   }
 
   handleTabClick = (event, value) => {
@@ -20,10 +17,11 @@ class PowerRankings extends Component {
   }
 
   renderTabs = () => {
+    console.log('tab', this.state.selectedTab)
     return (
       [
-        <Tab component={Link} to="/powerRankings/view" label="View Rankings" />,
-        <Tab component={Link} to="/powerRankings/submit" label="Submit Rankings" />,
+        <Tab key={1} component={Link} to="/powerRankings/view" label="View Rankings" />,
+        <Tab key={2} component={Link} to="/powerRankings/submit" label="Submit Rankings" />,
       ]
     )
   }
