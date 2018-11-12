@@ -2,9 +2,10 @@ import Axios from 'axios'
 
 let prodUrl = 'http://heyparkerj.com/'
 let devUrl = 'http://localhost:1337/'
-let url = process.env.NODE_ENV === 'prod' ? prodUrl : devUrl
+let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl
 // TODO - Ensure prod env is set up
 
+console.log('process', process.env.NODE_ENV)
 export default {
   sendTestData: dataToSend => {
     return new Promise((resolve, reject) => {

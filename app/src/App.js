@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 
 class TabsContainer extends Component {
   state = {
@@ -38,7 +38,9 @@ class App extends Component {
             <TabsContainer />
           </AppBar>
 
-          <Route exact path="/" component={PowerRankings} />
+          <Route exact path="/" render={() => (
+            <Redirect to="/powerRankings/view"/>
+          )}/>
           <Route path="/raw" component={RawData} />
           <Route path="/powerRankings" component={PowerRankings} />
         </div>
