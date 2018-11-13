@@ -131,12 +131,12 @@ class LoginComponent extends Component {
 
     return (
       <div>
-        {error}
         <p>Which of these idiots you is?</p>
         <Grid container
               spacing={8} >
           {buttons}
         </Grid>
+        {error}
         {loginForm}
       </div>
     )

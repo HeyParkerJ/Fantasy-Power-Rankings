@@ -1,6 +1,8 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -36,6 +38,9 @@ const renderRankings = (rankings) => {
 const styles = {
   card: {
     maxWidth: 275,
+    marginBottom: '20px',
+    marginTop: '20px',
+    backgroundColor: '#DAA520',
   }
 }
 
@@ -43,8 +48,10 @@ let PowerRankingsAggregateCard = (props) => {
   const { classes } = props
   return (
       <Card className={classes.card}>
-        <CardHeader title='Aggregate'></CardHeader>
-        { renderRankings(props.rankings) }
+        <CardContent>
+          <CardHeader title='Aggregate'></CardHeader>
+          { renderRankings(props.rankings) }
+        </CardContent>
       </Card>
   )
 }

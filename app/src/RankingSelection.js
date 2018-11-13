@@ -7,6 +7,8 @@ import {
 import Requests from './http/requests'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import ErrorMessage from './ErrorMessage'
+import SuccessMessage from './SuccessMessage'
 
 const SortableItem = SortableElement(({ value, sortIndex }) =>
                                      <Paper style={{
@@ -31,7 +33,8 @@ class RankingSelection extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      teams: props.teams
+      teams: props.teams,
+      status: null
     }
   }
 
@@ -45,8 +48,28 @@ class RankingSelection extends Component {
     Requests.postPowerRankings({
       teamId: this.props.teamId,
       rankings: this.state.teams
+    }).then((res) => {
+      this.setState({
+        status: res
+      })
     })
   }
+
+  renderError = () => {
+    if(this.state.status && this.state.status.status !== 200 ) {
+      return <ErrorMessage message={this.state.status.data} />
+    } else {
+      return null
+    }
+  }
+  renderSuccess = () => {
+    if(this.state.status && this.state.status.status === 200) {
+      return <SuccessMessage message={this.state.status.data} />
+    } else {
+      return null
+    }
+  }
+
 
   render() {
     let teams = null
@@ -60,6 +83,8 @@ class RankingSelection extends Component {
         <div style={{'color':'red'}}>Drag and drop, then click submit</div>
         {teams}
         <div>
+          {this.renderError()}
+          {this.renderSuccess()}
           <Button
             onClick={this.submitPowerRankings}
             color="primary"

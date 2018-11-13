@@ -1,11 +1,12 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
 
 import { withStyles } from '@material-ui/core/styles';
 
-const renderVoter = (users, teamId) => {
+const renderVoter = (users, teamId, className) => {
   let team
 
   users.forEach((t) => {
@@ -14,7 +15,7 @@ const renderVoter = (users, teamId) => {
     }
   })
 
-  return (<CardHeader title={`Submitter: ` + team.username}></CardHeader>)
+  return (<CardHeader className={className} title={team.username}></CardHeader>)
 }
 
 const renderRankings = (rankings) => {
@@ -38,6 +39,10 @@ const renderRankings = (rankings) => {
 const styles = {
   card: {
     maxWidth: 275,
+    minWidth: 200,
+  },
+  header: {
+    padding: '10px'
   }
 }
 
@@ -47,8 +52,10 @@ let PowerRankingsCard = (props) => {
   return (
     <Grid item>
       <Card className={classes.card}>
-        { renderVoter(props.users, props.rankings.teamId) }
-        { renderRankings(props.rankings) }
+        <CardContent>
+          { renderVoter(props.users, props.rankings.teamId, classes.header) }
+          { renderRankings(props.rankings) }
+        </CardContent>
       </Card>
     </Grid>
   )
