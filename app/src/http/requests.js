@@ -58,7 +58,7 @@ export default {
           resolve(response)
         })
         .catch(err => {
-          reject(err)
+          resolve(err.response)
         })
     })
   },

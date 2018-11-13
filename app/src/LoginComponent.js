@@ -55,7 +55,7 @@ class LoginComponent extends Component {
   login = () => {
     let data = {
       username: this.state.userToLogin.username,
-      password: this.state.password
+      password: this.state.password.toLowerCase()
     }
 
     Requests.loginUser(data)
