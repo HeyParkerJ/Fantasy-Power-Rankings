@@ -29,7 +29,7 @@ class PowerRankings extends Component {
   render() {
     return (
       <div>
-        <Tabs value={this.state.selectedTab} onChange={this.handleTabClick}>
+        <Tabs centered value={this.state.selectedTab} onChange={this.handleTabClick}>
           {this.renderTabs()}
         </Tabs>
         <Route path="/powerRankings/view"

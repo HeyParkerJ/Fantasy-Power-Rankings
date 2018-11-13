@@ -20,7 +20,7 @@ class TabsContainer extends Component {
 
   render() {
     return (
-      <Tabs value={this.state.selectedTab} onChange={this.handleTabClick}>
+      <Tabs centered value={this.state.selectedTab} onChange={this.handleTabClick}>
         <Tab label="Power Rankings" component={Link} to="/powerRankings"/>
         <Tab label="Raw Data" component={Link} to="/raw"/>
       </Tabs>
