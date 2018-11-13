@@ -128,7 +128,7 @@ app.post('/api/postPowerRankings', (req, res) => {
       req.body
     )
     return res
-      .status(500)
+      .status(401)
       .send('Not allowed to send subimssions during gametime')
   }
 
