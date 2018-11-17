@@ -17,7 +17,6 @@ class PowerRankings extends Component {
   }
 
   renderTabs = () => {
-    console.log('tab', this.state.selectedTab)
     return (
       [
         <Tab key={1} component={Link} to="/powerRankings/view" label="View Rankings" />,

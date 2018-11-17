@@ -12,7 +12,6 @@ class ViewPowerRankings extends Component {
       rankingsList: null,
       selectedWeek: null,
       users: null,
-      // TODO - make latest
     }
   }
 
@@ -26,7 +25,6 @@ class ViewPowerRankings extends Component {
     })
 
     Requests.getTeams().then(res => {
-      console.log(res)
       this.setState({ users: res.data })
     })
   }
