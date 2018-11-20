@@ -67,7 +67,7 @@ class LoginComponent extends Component {
       })
   }
 
-  RenderButtons = () => {
+  createButtons = () => {
     let buttons = []
     this.state.users.forEach(user => {
       buttons.push(
@@ -93,33 +93,38 @@ class LoginComponent extends Component {
     this.login()
   }
 
-  render() {
-    // TODO - Make these html declarations functions
-    let buttons = []
-    let error = null
-    let loginForm = null
 
-    if (this.state.users) {
-      buttons = this.RenderButtons()
-    }
-
-    if (this.state.error) {
-      error = (
+  renderError = () => {
+    if(this.state.error) {
+      return (
         <div>
-          <p>Try not to mess this up, we got an error from the server:</p>
-          <p>{this.state.error}</p>
+        <p>Try not to mess this up, we got an error from the server:</p>
+        <p>{this.state.error}</p>
         </div>
       )
+    } else {
+      return null
     }
+  }
 
-    if (this.state.userToLogin) {
-      loginForm = (
+  renderButtons = () => {
+    if (this.state.users) {
+      return this.createButtons()
+    } else {
+      return null
+    }
+  }
+
+  renderLoginForm = () => {
+    if(this.state.userToLogin) {
+      return (
         <form onSubmit={this.handleSubmit}
               style={{"marginTop": "10px"}} >
           <label>
             Password:
             <input
               type="test"
+              autoFocus
               value={this.state.password}
               onChange={this.handleChange}
             />
@@ -127,17 +132,21 @@ class LoginComponent extends Component {
           <input type="submit" value="Login" />
         </form>
       )
+    } else {
+      return null
     }
+  }
 
+  render() {
     return (
       <div>
         <p>Which of these idiots you is?</p>
         <Grid container
               spacing={8} >
-          {buttons}
+          {this.renderButtons()}
         </Grid>
-        {error}
-        {loginForm}
+        {this.renderError()}
+        {this.renderLoginForm()}
       </div>
     )
   }

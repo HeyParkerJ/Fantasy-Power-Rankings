@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import {
   SortableContainer,
   SortableElement,
@@ -23,7 +24,12 @@ const SortableList = SortableContainer(({ teams }) => {
   return (
     <ul>
       {teams.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} sortIndex={index} value={value} />
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          sortIndex={index}
+          value={value}
+        />
       ))}
     </ul>
   )
@@ -33,9 +39,37 @@ class RankingSelection extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      teams: props.teams,
+      teams: this.sortTeams(),
       status: null
     }
+  }
+
+  sortTeams = () => {
+    let keys = Object.keys(this.props.rankingsList).map((k) => {
+      return parseInt(k)
+    })
+
+    // Above for debugging only
+    let max = Math.max.apply(Math, keys);
+    let latestWeek = this.props.rankingsList[max]
+    let latestRankings = []
+    latestWeek[0].rankings[0].forEach((r) => {
+      latestRankings.push(parseInt(r.teamId))
+    })
+
+    function mapOrder (array, order, key) {
+      array.sort( function (a, b) {
+        var A = a[key], B = b[key];
+        if (order.indexOf(A) > order.indexOf(B)) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      return array
+    };
+
+    return mapOrder(this.props.teams, latestRankings, 'teamId')
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -75,7 +109,10 @@ class RankingSelection extends Component {
     let teams = null
     if (this.state.teams) {
       teams = (
-        <SortableList teams={this.state.teams} onSortEnd={this.onSortEnd} />
+        <SortableList
+          teams={this.state.teams}
+          onSortEnd={this.onSortEnd}
+        />
       )
     }
     return (
@@ -96,6 +133,11 @@ class RankingSelection extends Component {
       </div>
     )
   }
+}
+
+RankingSelection.propTypes = {
+  rankingsList: PropTypes.object,
+  teams: PropTypes.object,
 }
 
 export default RankingSelection

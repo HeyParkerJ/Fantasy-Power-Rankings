@@ -3,16 +3,8 @@ import Axios from 'axios'
 let prodUrl = 'http://heyparkerj.com/'
 let devUrl = 'http://localhost:1337/'
 let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl
-// TODO - Ensure prod env is set up
 
-console.log('process', process.env.NODE_ENV)
 export default {
-  sendTestData: dataToSend => {
-    return new Promise((resolve, reject) => {
-      Axios.post(url + 'api', dataToSend)
-    })
-  }, // TODO - Error handle this message
-
   loginUser: data => {
     return new Promise((resolve, reject) => {
       Axios.post(url + 'api/login', data)
@@ -41,7 +33,6 @@ export default {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getTeams')
         .then(response => {
-          console.log('got response', response)
           resolve(response)
         })
         .catch(err => {
@@ -54,7 +45,6 @@ export default {
     return new Promise((resolve, reject) => {
       Axios.post(url + 'api/postPowerRankings', powerRankings)
         .then(response => {
-          console.log('got response', response)
           resolve(response)
         })
         .catch(err => {

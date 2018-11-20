@@ -34,17 +34,6 @@ db.once('open', function() {
 
 app.use(cors())
 
-app.get('/data/test', (req, res) => {
-  res.send({
-    hello: 'world',
-    name: 'parker Johnson',
-    data: {
-      data1: 'true',
-      data2: false
-    }
-  })
-})
-
 app.get('/data/:year', (req, res) => {
   const year = req.params.year
   const filePath = path.resolve(process.cwd(), 'data/' + year + '.json')
@@ -153,9 +142,10 @@ app.post('/api/postPowerRankings', (req, res) => {
     options,
     (err, data) => {
       if (err) {
-        res.status(500).send('Something went wrong', err)
+        res
+          .status(500)
+          .send('Something went wrong submitting PowerRankings', err, data)
       } else {
-        // TODO - this is a bit of a lie. Doesn't guarantee rankings were updated.
         res.status(200).send('Successfully updated rankings')
       }
     }
@@ -174,26 +164,6 @@ app.get('/api/getAllPowerRankings', (req, res) => {
 
     res.status(200).send(formattedData)
   })
-})
-
-// TODO - Delete
-app.post('/powerRankings/makeUser', (req, res) => {
-  if (req.body.username && req.body.password && req.body.passwordConf) {
-    var userData = {
-      username: req.body.username,
-      password: req.body.password,
-      passwordConf: req.body.passwordConf
-    }
-
-    // use scheme.create to insert data into the db
-    User.create(userData, function(err, user) {
-      if (err) {
-        return next(err)
-      } else {
-        return res.redirect('/profile')
-      }
-    })
-  }
 })
 
 const port = 1337
