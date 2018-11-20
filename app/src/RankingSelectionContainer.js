@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import Requests from './http/requests'
 import RankingSelection from './RankingSelection'
 
@@ -25,10 +26,15 @@ class RankingSelectionContainer extends Component {
         <RankingSelection
           teams={this.state.teams}
           teamId={this.props.user.teamId}
+          rankingsList={this.props.rankingsList}
         />
       </div>
     )
   }
+}
+
+RankingSelectionContainer.propTypes = {
+  rankingsList: PropTypes.object,
 }
 
 export default RankingSelectionContainer

@@ -115,7 +115,7 @@ class LoginComponent extends Component {
     }
   }
 
-  renderUserToLogin = () => {
+  renderLoginForm = () => {
     if(this.state.userToLogin) {
       return (
         <form onSubmit={this.handleSubmit}
@@ -124,6 +124,7 @@ class LoginComponent extends Component {
             Password:
             <input
               type="test"
+              autoFocus
               value={this.state.password}
               onChange={this.handleChange}
             />
