@@ -4,12 +4,29 @@ import SubmitRankingsContainer from './SubmitRankingsContainer'
 import ViewPowerRankings from './ViewPowerRankings'
 import { Route, Link } from 'react-router-dom'
 
+import Requests from './http/requests'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 class PowerRankings extends Component {
   state = {
-    selectedTab: 0
+    selectedTab: 0,
+    rankingsList: null,
+    selectedWeek: null,
+  }
+
+  componentDidMount() {
+    Requests.getAllPowerRankings().then(res => {
+      let weeks = Object.keys(res).sort()
+      this.setState({
+        rankingsList: res,
+        selectedWeek: weeks[weeks.length-1]
+      })
+    })
+  }
+
+  setWeekToDisplay = week => {
+    this.setState({ selectedWeek: week })
   }
 
   handleTabClick = (event, value) => {
@@ -32,10 +49,20 @@ class PowerRankings extends Component {
           {this.renderTabs()}
         </Tabs>
         <Route path="/powerRankings/view"
-               component={ViewPowerRankings}
+               render={(props) =>
+                       <ViewPowerRankings
+                         rankingsList={this.state.rankingsList}
+                         selectedWeek={this.state.selectedWeek}
+                         setWeekToDisplay={this.setWeekToDisplay}
+                       />
+                      }
         />
         <Route path="/powerRankings/submit"
-                component={SubmitRankingsContainer}
+               render={(props) =>
+                       <SubmitRankingsContainer
+                         rankingsList={this.state.rankingsList}
+                       />
+                      }
         />
       </div>
    )

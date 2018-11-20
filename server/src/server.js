@@ -166,6 +166,21 @@ app.get('/api/getAllPowerRankings', (req, res) => {
   })
 })
 
+/*
+  app.get('/api/rankings/:userId/:seasonId/:weekId', (req, res) => {
+PowerRanking.find({}, (err, rankings) => {
+  let formattedData = {}
+
+  rankings.forEach(d => {
+    let weekId = d.weekId
+    formattedData[weekId] = formattedData[weekId] || []
+    formattedData[weekId].push(d)
+  })
+
+  res.status(200).send(formattedData)
+})
+*/
+
 const port = 1337
 app.listen(port, () => {
   console.log('App listening on port ' + port + '.')

@@ -44,16 +44,6 @@ db.once('open', function () {
   console.log('connection open!!');
 });
 app.use((0, _cors.default)());
-app.get('/data/test', function (req, res) {
-  res.send({
-    hello: 'world',
-    name: 'parker Johnson',
-    data: {
-      data1: 'true',
-      data2: false
-    }
-  });
-});
 app.get('/data/:year', function (req, res) {
   var year = req.params.year;
 
@@ -129,10 +119,11 @@ app.post('/api/postPowerRankings', function (req, res) {
   var week;
 
   try {
-    week = _DateUtils.default.determineWeekOfSubmission(currentTime);
+    //week = DateUtils.determineWeekOfSubmission(currentTime)
+    week = 12;
   } catch (err) {
     console.error('Rankings were submitted while submissions are closed', (0, _moment.default)(currentTime), req.body);
-    return res.status(500).send('Not allowed to send subimssions during gametime');
+    return res.status(401).send('Not allowed to send subimssions during gametime');
   }
 
   var powerRankingData = {
@@ -153,9 +144,8 @@ app.post('/api/postPowerRankings', function (req, res) {
     }
   }, options, function (err, data) {
     if (err) {
-      res.status(500).send('Something went wrong', err);
+      res.status(500).send('Something went wrong submitting PowerRankings', err, data);
     } else {
-      // TODO - this is a bit of a lie. Doesn't guarantee rankings were updated.
       res.status(200).send('Successfully updated rankings');
     }
   });
@@ -170,25 +160,22 @@ app.get('/api/getAllPowerRankings', function (req, res) {
     });
     res.status(200).send(formattedData);
   });
-}); // TODO - Delete
-
-app.post('/powerRankings/makeUser', function (req, res) {
-  if (req.body.username && req.body.password && req.body.passwordConf) {
-    var userData = {
-      username: req.body.username,
-      password: req.body.password,
-      passwordConf: req.body.passwordConf // use scheme.create to insert data into the db
-
-    };
-    User.create(userData, function (err, user) {
-      if (err) {
-        return next(err);
-      } else {
-        return res.redirect('/profile');
-      }
-    });
-  }
 });
+/*
+  app.get('/api/rankings/:userId/:seasonId/:weekId', (req, res) => {
+PowerRanking.find({}, (err, rankings) => {
+  let formattedData = {}
+
+  rankings.forEach(d => {
+    let weekId = d.weekId
+    formattedData[weekId] = formattedData[weekId] || []
+    formattedData[weekId].push(d)
+  })
+
+  res.status(200).send(formattedData)
+})
+*/
+
 var port = 1337;
 app.listen(port, function () {
   console.log('App listening on port ' + port + '.');
