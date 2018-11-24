@@ -161,21 +161,6 @@ app.get('/api/getAllPowerRankings', function (req, res) {
     res.status(200).send(formattedData);
   });
 });
-/*
-  app.get('/api/rankings/:userId/:seasonId/:weekId', (req, res) => {
-PowerRanking.find({}, (err, rankings) => {
-  let formattedData = {}
-
-  rankings.forEach(d => {
-    let weekId = d.weekId
-    formattedData[weekId] = formattedData[weekId] || []
-    formattedData[weekId].push(d)
-  })
-
-  res.status(200).send(formattedData)
-})
-*/
-
 var port = 1337;
 app.listen(port, function () {
   console.log('App listening on port ' + port + '.');
