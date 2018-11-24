@@ -22,9 +22,13 @@ const renderRankings = (rankings) => {
 
   placementsArray.forEach((r, index) => {
     //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
+
+    // Round to two decimals, only if needed
+    let rankingsAverageRounded = Math.round(parseInt(r.rankingsAverage * 100)) / 100
+
     rankingRows.push(
       <div key={index+1}>
-        {index+1}: {r.username} ({r.rankingsAverage})
+        {index+1}: {r.username} ({rankingsAverageRounded})
       </div>
     )
   })
