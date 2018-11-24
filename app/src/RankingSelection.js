@@ -71,7 +71,6 @@ class RankingSelection extends Component {
     let latestWeekId = Math.max.apply(Math, keys)
 
     let mostRecentSubmission = this.getMostRecentSubmissionFromTeam()
-debugger
     if(mostRecentSubmission === null) {
       let aggregateRankings = RankingsUtils.createAggregateRankings(this.props.rankingsList[latestWeekId])
       // AggregateRankings comes back as an object so we need to make it an ordered array
