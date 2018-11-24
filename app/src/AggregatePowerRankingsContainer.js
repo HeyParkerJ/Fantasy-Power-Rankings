@@ -1,38 +1,10 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import PowerRankingsAggregateCard from './PowerRankingsAggregateCard'
-
-const createAggregateRankings = (rankings) => {
-  let aggregateRankingsObject = {}
-  rankings.forEach((ranking) => {
-    ranking.rankings[0].forEach((rank, index) => {
-      index++
-      let teamId = rank.teamId
-      if(!aggregateRankingsObject.hasOwnProperty(teamId)) {
-        aggregateRankingsObject[teamId] = {
-          username: rank.username,
-          rankingsArray: [index],
-          rankingsAverage: [index],
-          teamId: teamId
-        }
-      } else {
-        let arr = aggregateRankingsObject[teamId].rankingsArray
-        arr.push(index)
-
-        if (arr.length) {
-          let sum = arr.reduce(function(a, b) { return a + b; });
-          let avg = sum / arr.length;
-          aggregateRankingsObject[teamId].rankingsAverage = avg
-        }
-      }
-    })
-  })
-
-  return aggregateRankingsObject
-}
+import RankingsUtils from './utils/RankingsUtils'
 
 let AggregatePowerRankingsContainer = (props) => {
-  let aggregateRankings = createAggregateRankings(props.rankings)
+  let aggregateRankings = RankingsUtils.createAggregateRankings(props.rankings)
 
   return (
     <Grid item>
