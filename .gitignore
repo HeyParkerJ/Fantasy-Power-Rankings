@@ -3,4 +3,5 @@
 node_modules*
 .DS_store
 /server/data/*
+/server/lib/*
 package-lock.json
