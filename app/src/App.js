@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom'
 
 class TabsContainer extends Component {
   state = {
@@ -32,7 +32,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <div>
           <AppBar position="static" color="default">
             <TabsContainer />
@@ -44,7 +44,7 @@ class App extends Component {
           <Route path="/raw" component={RawData} />
           <Route path="/powerRankings" component={PowerRankings} />
         </div>
-      </Router>
+      </BrowserRouter>
     )
   }
 }

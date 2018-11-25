@@ -30,8 +30,6 @@ export default {
 
   // Intakes an aggregateRankignsObject and outputs an array of teams sorted by placement
   createAggregateRankingsArray: (aggregateRankingsObject) => {
-    let rankingRows = []
-
     let placementsArray = []
     for (let placement in aggregateRankingsObject) {
       placementsArray.push(aggregateRankingsObject[placement])
