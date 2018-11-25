@@ -8,6 +8,11 @@ class PowerRankingWeekSelectionComponent extends Component {
     selectedTab: this.props.weeks.length - 1
   }
 
+  componentDidMount() {
+    let latestWeekIndex = this.props.weeks.length - 1
+    this.props.setWeekToDisplay(this.props.weeks[latestWeekIndex])
+  }
+
   handleTabClick = (event, value) => {
     this.setState({selectedTab: value})
   }
@@ -26,6 +31,7 @@ class PowerRankingWeekSelectionComponent extends Component {
   }
 
   render() {
+    debugger
     return (
       <Tabs centered value={this.state.selectedTab} onChange={this.handleTabClick}>
         {this.renderWeeks()}

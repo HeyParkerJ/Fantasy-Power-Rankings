@@ -163,7 +163,7 @@ class RankingSelection extends Component {
 
 RankingSelection.propTypes = {
   rankingsList: PropTypes.object,
-  teams: PropTypes.object,
+  teams: PropTypes.array,
 }
 
 export default RankingSelection
