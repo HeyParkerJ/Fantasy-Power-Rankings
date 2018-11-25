@@ -17,10 +17,16 @@ class PowerRankings extends Component {
 
   componentDidMount() {
     Requests.getAllPowerRankings().then(res => {
-      let weeks = Object.keys(res).sort()
+      let keysArray = []
+      Object.keys(res).forEach((k) => {
+        keysArray.push(parseInt(k))
+      })
+      keysArray.sort((a, b) => {
+        return parseInt(a) - parseInt(b)
+      })
       this.setState({
         rankingsList: res,
-        selectedWeek: weeks[weeks.length-1]
+        selectedWeek: res[keysArray.length-1]
       })
     })
   }
