@@ -31,7 +31,6 @@ class PowerRankingWeekSelectionComponent extends Component {
   }
 
   render() {
-    debugger
     return (
       <Tabs centered value={this.state.selectedTab} onChange={this.handleTabClick}>
         {this.renderWeeks()}

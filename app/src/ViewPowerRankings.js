@@ -70,7 +70,7 @@ class ViewPowerRankings extends Component {
 
   renderAggregatePowerRankingsContainer = () => {
     if(this.state.selectedWeek && this.state.rankingsList && this.state.users) {
-      return <AggregatePowerRankingsContainer rankings={this.state.rankingsList[this.state.selectedWeek]}/>
+      return <AggregatePowerRankingsContainer rankings={this.state.rankingsList[this.state.selectedWeek]} users={this.state.users}/>
     } else {
       return null
     }

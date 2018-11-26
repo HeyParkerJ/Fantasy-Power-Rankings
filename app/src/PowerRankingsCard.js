@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
 
 import { withStyles } from '@material-ui/core/styles';
+const emoji = require("emoji-dictionary");
 
 const renderVoter = (users, teamId, className) => {
   let team
@@ -18,14 +19,25 @@ const renderVoter = (users, teamId, className) => {
   return (<CardHeader className={className} title={team.username}></CardHeader>)
 }
 
-const renderRankings = (rankings) => {
+const renderRankings = (rankings, users) => {
+  // we have to get the emojis from the users object and amtch it with the submissions in rankings object
+  // For each ranking, loop through each user and when the teamId of the user matches, 
+
   rankings = rankings.rankings[0]
   let rankingRows = []
   rankings.forEach((r, index) => {
-    //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
+    users.forEach((u) => {
+      if(u.teamId === r.teamId) {
+        r.emoji = u.emoji
+      }
+    })
+
     rankingRows.push(
       <div key={index+1}>
-        {index+1}: {r.username}
+        {index+1}:
+        {r.username}
+        &nbsp;
+        <span>{emoji.getUnicode(r.emoji)}</span>
       </div>
     )
   })
@@ -49,12 +61,14 @@ const styles = {
 let PowerRankingsCard = (props) => {
   const { classes } = props
 
+  console.log('users, rankings', props.users, props.rankings)
+
   return (
     <Grid item>
       <Card className={classes.card}>
         <CardContent>
           { renderVoter(props.users, props.rankings.teamId, classes.header) }
-          { renderRankings(props.rankings) }
+          { renderRankings(props.rankings, props.users) }
         </CardContent>
       </Card>
     </Grid>
