@@ -35,6 +35,7 @@ const renderRankings = (rankings, users) => {
     rankingRows.push(
       <div key={index+1}>
         {index+1}:
+        &nbsp;
         {r.username}
         &nbsp;
         <span>{emoji.getUnicode(r.emoji)}</span>
@@ -60,8 +61,6 @@ const styles = {
 
 let PowerRankingsCard = (props) => {
   const { classes } = props
-
-  console.log('users, rankings', props.users, props.rankings)
 
   return (
     <Grid item>
