@@ -35,6 +35,7 @@ const renderRankings = (rankings, users) => {
     rankingRows.push(
       <div key={index+1}>
         {index+1}:
+        &nbsp;
         {r.username}
         &nbsp;
         <span>{emoji.getUnicode(r.emoji)}</span>
