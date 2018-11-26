@@ -62,8 +62,6 @@ const styles = {
 let PowerRankingsCard = (props) => {
   const { classes } = props
 
-  console.log('users, rankings', props.users, props.rankings)
-
   return (
     <Grid item>
       <Card className={classes.card}>
