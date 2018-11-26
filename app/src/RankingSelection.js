@@ -10,16 +10,17 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import ErrorMessage from './ErrorMessage'
 import SuccessMessage from './SuccessMessage'
+import emoji from "emoji-dictionary";
 
 import RankingsUtils from './utils/RankingsUtils'
 
 const SortableItem = SortableElement(({ value, sortIndex }) =>
                                      <Paper style={{
-                                                 "maxWidth": "85px",
+                                                 "maxWidth": "125px",
                                                  "marginTop": "4px",
                                                  "marginBottom": "4px",
                                                 }}>
-                                       {sortIndex+1}: {value.username}
+                                       {sortIndex+1}:  <span>{emoji.getUnicode(value.emoji)}</span> &nbsp;{value.username} 
                                      </Paper>)
 
 const SortableList = SortableContainer(({ teams }) => {

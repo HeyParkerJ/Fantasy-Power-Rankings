@@ -40,6 +40,18 @@ export default {
     })
 
     return placementsArray
+  },
+
+  appendEmojisToRankingsArray: (rankingsArray, users) => {
+    debugger
+    rankingsArray.forEach((r, index) => {
+      users.forEach((u) => {
+        if(u.teamId === r.teamId) {
+          r.emoji = u.emoji
+        }
+      })
+    })
+    return rankingsArray
   }
 
 }
