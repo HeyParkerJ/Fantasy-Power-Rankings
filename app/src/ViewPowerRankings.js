@@ -11,6 +11,8 @@ class ViewPowerRankings extends Component {
     super()
     this.state = {
       users: null,
+      rankingsList: null,
+      selectedWeek: null,
     }
   }
 
@@ -18,14 +20,31 @@ class ViewPowerRankings extends Component {
     Requests.getTeams().then(res => {
       this.setState({ users: res.data })
     })
+
+    Requests.getAllPowerRankings().then(res => {
+
+      let keysArray = Object.keys(res).sort((a, b) => {
+        return parseInt(a) - parseInt(b)
+      })
+
+      this.setState({
+        rankingsList: res,
+        selectedWeek: res[keysArray.length-1]
+      })
+    })
+
+  }
+
+  setWeekToDisplay = week => {
+    this.setState({ selectedWeek: week })
   }
 
 
   renderWeekSelection = () => {
     let weeksWithSubmissions = []
 
-    if(this.props.rankingsList) {
-      Object.keys(this.props.rankingsList).forEach((week,index) => {
+    if(this.state.rankingsList) {
+      Object.keys(this.state.rankingsList).forEach((week,index) => {
         weeksWithSubmissions.push(week);
       })
     } else {
@@ -34,15 +53,15 @@ class ViewPowerRankings extends Component {
 
     return <PowerRankingWeekSelectionComponent
              weeks={weeksWithSubmissions}
-             setWeekToDisplay={this.props.setWeekToDisplay}
+             setWeekToDisplay={this.setWeekToDisplay}
            />
   }
 
   renderSelectedWeek = () => {
     let rankings = []
 
-    if(this.props.selectedWeek && this.props.rankingsList && this.state.users) {
-      this.props.rankingsList[this.props.selectedWeek].forEach((ranking) => {
+    if(this.state.selectedWeek && this.state.rankingsList && this.state.users) {
+      this.state.rankingsList[this.state.selectedWeek].forEach((ranking) => {
         rankings.push(<PowerRankingsCard key={ranking.teamId} rankings={ranking} users={this.state.users} />)
       })
     }
@@ -50,8 +69,8 @@ class ViewPowerRankings extends Component {
   }
 
   renderAggregatePowerRankingsContainer = () => {
-    if(this.props.selectedWeek && this.props.rankingsList && this.state.users) {
-      return <AggregatePowerRankingsContainer rankings={this.props.rankingsList[this.props.selectedWeek]}/>
+    if(this.state.selectedWeek && this.state.rankingsList && this.state.users) {
+      return <AggregatePowerRankingsContainer rankings={this.state.rankingsList[this.state.selectedWeek]} users={this.state.users}/>
     } else {
       return null
     }
@@ -59,8 +78,8 @@ class ViewPowerRankings extends Component {
 
   renderRankings = () => {
     let rankingsDiv = []
-    if(this.props.rankingsList) {
-      this.props.rankingsList.forEach((ranking) => {
+    if(this.state.rankingsList) {
+      this.state.rankingsList.forEach((ranking) => {
         rankingsDiv.push(<PowerRankingsCard key={ ranking.teamId } ranking={ranking}/>)
       })
     } else {
@@ -98,7 +117,6 @@ class ViewPowerRankings extends Component {
 ViewPowerRankings.propTypes = {
   rankingsList: PropTypes.object,
   selectedWeek: PropTypes.string,
-  setWeekToDisplay: PropTypes.func,
 }
 
 export default ViewPowerRankings

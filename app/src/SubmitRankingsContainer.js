@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
 import RankingSelectionContainer from './RankingSelectionContainer'
 import LoginComponent from './LoginComponent'
+import Requests from './http/requests'
 
 class SubmitRankingsContainer extends Component {
   constructor() {
@@ -9,9 +9,19 @@ class SubmitRankingsContainer extends Component {
     this.state = {
       isLoggedIn: false,
       user: undefined,
-      username: ''
+      username: '',
+      rankingsList: null,
     }
   }
+
+  componentDidMount() {
+    Requests.getAllPowerRankings().then(res => {
+      this.setState({
+        rankingsList: res,
+      })
+    })
+  }
+
 
   setUser = user => {
     this.setState({ isLoggedIn: true, user: user })
@@ -27,7 +37,7 @@ class SubmitRankingsContainer extends Component {
          ?
          <RankingSelectionContainer
            user={this.state.user}
-           rankingsList={this.props.rankingsList}
+           rankingsList={this.state.rankingsList}
          />
          :
           <LoginComponent setUser={this.setUser} />
@@ -37,8 +47,5 @@ class SubmitRankingsContainer extends Component {
   }
 }
 
-SubmitRankingsContainer.propTypes = {
-  rankingsList: PropTypes.object,
-}
 
 export default SubmitRankingsContainer

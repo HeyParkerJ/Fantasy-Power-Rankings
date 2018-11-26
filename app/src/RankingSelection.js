@@ -10,14 +10,17 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import ErrorMessage from './ErrorMessage'
 import SuccessMessage from './SuccessMessage'
+import emoji from "emoji-dictionary";
+
+import RankingsUtils from './utils/RankingsUtils'
 
 const SortableItem = SortableElement(({ value, sortIndex }) =>
                                      <Paper style={{
-                                                 "maxWidth": "85px",
+                                                 "maxWidth": "125px",
                                                  "marginTop": "4px",
                                                  "marginBottom": "4px",
                                                 }}>
-                                       {sortIndex+1}: {value.username}
+                                       {sortIndex+1}:  <span>{emoji.getUnicode(value.emoji)}</span> &nbsp;{value.username} 
                                      </Paper>)
 
 const SortableList = SortableContainer(({ teams }) => {
@@ -25,7 +28,7 @@ const SortableList = SortableContainer(({ teams }) => {
     <ul>
       {teams.map((value, index) => (
         <SortableItem
-          key={`item-${index}`}
+          key={`item-${index}`}//`; this fixes chrome debugger breaking on backticks
           index={index}
           sortIndex={index}
           value={value}
@@ -44,16 +47,40 @@ class RankingSelection extends Component {
     }
   }
 
+  getMostRecentSubmissionFromTeam = () => {
+    let keys = Object.keys(this.props.rankingsList).map((k) => {
+      return parseInt(k)
+    })
+    let latestWeekId = Math.max.apply(Math, keys)
+    let latestWeek = this.props.rankingsList[latestWeekId]
+
+    let mostRecentSubmission = null
+
+    latestWeek.forEach((week) => {
+      if(week.teamId === this.props.teamId) {
+        mostRecentSubmission = week.rankings[0]
+      }
+    })
+
+    return mostRecentSubmission
+  }
+
   sortTeams = () => {
     let keys = Object.keys(this.props.rankingsList).map((k) => {
       return parseInt(k)
     })
+    let latestWeekId = Math.max.apply(Math, keys)
 
-    // Above for debugging only
-    let max = Math.max.apply(Math, keys);
-    let latestWeek = this.props.rankingsList[max]
+    let mostRecentSubmission = this.getMostRecentSubmissionFromTeam()
+    if(mostRecentSubmission === null) {
+      let aggregateRankings = RankingsUtils.createAggregateRankings(this.props.rankingsList[latestWeekId])
+      // AggregateRankings comes back as an object so we need to make it an ordered array
+      let sortedAggregateRankings = RankingsUtils.createAggregateRankingsArray(aggregateRankings);
+      mostRecentSubmission = sortedAggregateRankings
+    }
+
     let latestRankings = []
-    latestWeek[0].rankings[0].forEach((r) => {
+    mostRecentSubmission.forEach((r) => {
       latestRankings.push(parseInt(r.teamId))
     })
 
@@ -137,7 +164,7 @@ class RankingSelection extends Component {
 
 RankingSelection.propTypes = {
   rankingsList: PropTypes.object,
-  teams: PropTypes.object,
+  teams: PropTypes.array,
 }
 
 export default RankingSelection

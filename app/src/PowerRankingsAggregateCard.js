@@ -2,11 +2,12 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
-
+import RankingsUtils from './utils/RankingsUtils'
 
 import { withStyles } from '@material-ui/core/styles';
+import emoji from "emoji-dictionary";
 
-const renderRankings = (rankings) => {
+const renderRankings = (rankings, users) => {
   let rankingRows = []
 
   // We want to keep the placements as an object to make averaging & data storage easier,
@@ -20,11 +21,15 @@ const renderRankings = (rankings) => {
     return a.rankingsAverage - b.rankingsAverage
   })
 
+  placementsArray = RankingsUtils.appendEmojisToRankingsArray(placementsArray, users)
+
   placementsArray.forEach((r, index) => {
-    //let emoji = String.fromCodePoint(parseInt (r.emoji, 16))
+    // Round to two decimals, only if needed
+    let rankingsAverageRounded = Math.round(parseInt(r.rankingsAverage * 100)) / 100
+
     rankingRows.push(
       <div key={index+1}>
-        {index+1}: {r.username} ({r.rankingsAverage})
+        {index+1}: {r.username} &nbsp; <span>{emoji.getUnicode(r.emoji)}</span> &nbsp; ({rankingsAverageRounded})
       </div>
     )
   })
@@ -50,7 +55,7 @@ let PowerRankingsAggregateCard = (props) => {
       <Card className={classes.card}>
         <CardContent>
           <CardHeader title='Aggregate'></CardHeader>
-          { renderRankings(props.rankings) }
+          { renderRankings(props.rankings, props.users) }
         </CardContent>
       </Card>
   )
