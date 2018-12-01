@@ -49,42 +49,35 @@ export default {
     Increment the leader index and compare it to the follower index
     While
       they match
+        Set the dataPoint on every index between the two (make a walker index?)
         Increment the leader index and check again
       else
-        Set the dataPoint on every index between the two (make a walker index?)
         Increment the follower index
     */
-  // TODO - do real testing on this
   appendTieAdjustedRankings: (placementsArray) => {
-    
+    let leaderIndex = 0
+    let anchorIndex = 0
+    let stop = false
 
+    while(placementsArray[leaderIndex] && placementsArray[anchorIndex] && !stop) {
+      let leaderPlacement = placementsArray[leaderIndex]
+      let anchorPlacement = placementsArray[anchorIndex]
 
-
-    placementsArray.forEach((placment, index, originalArray) => {
-      // Check next index for same average
-      let nextItemRankingsAverage = null
-      let nextItemRankingsAverageMatches = true
-      while(nextItemRankingsAverageMatches) {
-        if()
-      }
-      let nextItem = originalArray[index+1]
-
-      if (!nextItem) { return null }
-
-      if(nextItem.rankingsAverage === placement.rankingsAverage) {
-        // Keep looking at the next item until it doesn't match anymore
-        // If you find a match, add it to an array of matches
-        let loopingIndex = index
-        let nextItem = originalArray[index+loopingIndex]
-        while (nextItem) {
-          if(nextItem)
-          nextItem = 
-            loopingIndex++
+      if(leaderPlacement.rankingsAverage === anchorPlacement.rankingsAverage) {
+        // anchorIndex in this case is basically the original (and highest) ranking
+        leaderPlacement.tieAdjustedRanking = anchorIndex + 1
+        leaderIndex++
+      } else {
+        anchorPlacement.tieAdjustedRanking = anchorIndex + 1
+        if(!placementsArray[leaderIndex+1]) {
+          leaderPlacement.tieAdjustedRanking = leaderIndex + 1
         }
+        anchorIndex = leaderIndex
+        // Terminates once leaderIndex reaches out of bounds
+        leaderIndex++
       }
-
-      debugger
-    })
+    }
+    return placementsArray
   },
 
   /*
