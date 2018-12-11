@@ -42,8 +42,48 @@ export default {
     return placementsArray
   },
 
+  /* This is the sliding door algorithm.
+
+    Set a leader and an anchor index.
+    Start both at 0
+    Increment the leader index and compare it to the follower index
+    While
+      they match
+        Set the dataPoint on every index between the two (make a walker index?)
+        Increment the leader index and check again
+      else
+        Increment the follower index
+    */
+  appendTieAdjustedRankings: (placementsArray) => {
+    let leaderIndex = 0
+    let anchorIndex = 0
+    let stop = false
+
+    while(placementsArray[leaderIndex] && placementsArray[anchorIndex] && !stop) {
+      let leaderPlacement = placementsArray[leaderIndex]
+      let anchorPlacement = placementsArray[anchorIndex]
+
+      if(leaderPlacement.rankingsAverage === anchorPlacement.rankingsAverage) {
+        // anchorIndex in this case is basically the original (and highest) ranking
+        leaderPlacement.tieAdjustedRanking = anchorIndex + 1
+        leaderIndex++
+      } else {
+        anchorPlacement.tieAdjustedRanking = anchorIndex + 1
+        if(!placementsArray[leaderIndex+1]) {
+          leaderPlacement.tieAdjustedRanking = leaderIndex + 1
+        }
+        anchorIndex = leaderIndex
+        // Terminates once leaderIndex reaches out of bounds
+        leaderIndex++
+      }
+    }
+    return placementsArray
+  },
+
+  /*
+    Used because emojis are a part of the users array, but not the rankingsArray object
+*/
   appendEmojisToRankingsArray: (rankingsArray, users) => {
-    debugger
     rankingsArray.forEach((r, index) => {
       users.forEach((u) => {
         if(u.teamId === r.teamId) {
