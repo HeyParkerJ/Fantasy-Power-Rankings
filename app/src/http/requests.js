@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-let prodUrl = 'https://heyparkerj.com/'
+let prodUrl = 'https://10guys1cup.com/'
 let devUrl = 'http://localhost:1337/'
 let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl
 
