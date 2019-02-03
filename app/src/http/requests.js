@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-let prodUrl = 'http://heyparkerj.com/'
+let prodUrl = 'https://heyparkerj.com/'
 let devUrl = 'http://localhost:1337/'
 let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl
 
@@ -14,6 +14,17 @@ export default {
         .catch(err => {
           reject(err)
         })
+    })
+  },
+
+  getDataForSeason: (seasonId) => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url + 'data/' + seasonId).then(response => {
+        resolve(response.data)
+      })
+      .catch(err => {
+        reject(err)
+      })
     })
   },
 

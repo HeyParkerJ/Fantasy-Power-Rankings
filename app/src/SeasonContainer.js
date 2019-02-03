@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DataDisplay from './DataDisplay'
-import Axios from 'axios'
+import Requests from './http/requests'
 
 class SeasonContainer extends Component {
   constructor() {
@@ -11,8 +11,8 @@ class SeasonContainer extends Component {
   }
 
   handleClick = () => {
-    Axios.get('http://heyparkerj.com/data/' + this.props.season).then(res => {
-      this.setState({ data: res.data })
+    Requests.getDataForSeason(this.props.season).then(res => {
+      this.setState({data: res})
     })
   }
 
