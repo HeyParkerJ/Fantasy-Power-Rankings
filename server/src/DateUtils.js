@@ -64,12 +64,6 @@ let weeks = [
     weekStartDate: Moment('18 Dec 18' + weekStartHour),
     gamesStartDate: Moment('20 Dec 18' + startHour),
     gamesEndDate: Moment('24 Dec 18' + endHour)
-  },
-  {
-    week: 17,
-    weekStartDate: Moment('25 Dec 18' + weekStartHour),
-    gamesStartDate: Moment('27 Dec 18' + startHour),
-    gamesEndDate: Moment('31 Dec 18' + endHour)
   }
 ]
 
