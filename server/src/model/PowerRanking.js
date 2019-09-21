@@ -18,6 +18,10 @@ let PowerRankingSchema = new mongoose.Schema({
     default: Date.now,
     required: true
   },
+    season: {
+        type: Number,
+        required: true
+    },
 })
 
 let PowerRanking = mongoose.model('PowerRanking', PowerRankingSchema);

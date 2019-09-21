@@ -23,7 +23,7 @@ app.use(
   })
 )
 
-let mongoDB = 'mongodb://localhost/test'
+let mongoDB = 'mongodb://localhost/prod'
 mongoose.connect(mongoDB)
 mongoose.Promise = global.Promise // Weird
 let db = mongoose.connection
@@ -152,6 +152,21 @@ app.post('/api/postPowerRankings', (req, res) => {
   )
 })
 
+app.get('/api/getAllPowerRankingsForYear/:year', (req, res) => {
+    const year = req.params.year
+    // TODO - year === year
+    PowerRanking.find({}, (err, rankings) => {
+        let formattedData = {}
+
+        rankings.forEach(d => {
+            let weekId = d.weekId
+            formattedData[weekId] = formattedData[weekId] || []
+            formattedData[weekId].push(d)
+        })
+
+        res.status(200).send(formattedData)
+    })
+})
 app.get('/api/getAllPowerRankings', (req, res) => {
   PowerRanking.find({}, (err, rankings) => {
     let formattedData = {}
