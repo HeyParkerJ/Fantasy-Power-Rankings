@@ -86,5 +86,18 @@ export default {
           reject(err)
         })
     })
+  },
+  getAllPowerRankingsForCurrentSeason: () => {
+    // TODO - change this after one submission has been created.
+    const currentYear = 2018 // TODO - Because I don't want to add moment to the front end and it's smarter to just do this for now
+    return new Promise((resolve, reject) => {
+      Axios.get(url + 'api/getAllPowerRankingsForSeason/' + currentYear)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
 }

@@ -23,7 +23,8 @@ app.use(
   })
 )
 
-let mongoDB = 'mongodb://localhost/prod'
+//let mongoDB = 'mongodb://localhost/prod'
+let mongoDB = 'mongodb://localhost/test_2019'
 mongoose.connect(mongoDB)
 mongoose.Promise = global.Promise // Weird
 let db = mongoose.connection
@@ -107,6 +108,7 @@ app.get('/api/getTeams', (req, res) => {
 
 app.post('/api/postPowerRankings', (req, res) => {
   let currentTime = Moment.now()
+    let currentYear = Moment().year()
   let week
   try {
     week = DateUtils.determineWeekOfSubmission(currentTime)
@@ -124,7 +126,8 @@ app.post('/api/postPowerRankings', (req, res) => {
   let powerRankingData = {
     week: week,
     teamId: req.body.teamId,
-    rankings: req.body.rankings
+      rankings: req.body.rankings,
+      season: currentYear,
   }
 
   let options = { upsert: true }
@@ -132,7 +135,8 @@ app.post('/api/postPowerRankings', (req, res) => {
   PowerRanking.updateOne(
     {
       teamId: req.body.teamId,
-      weekId: week
+        weekId: week,
+        season: currentYear,
     },
     {
       $set: {

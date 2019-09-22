@@ -10,18 +10,17 @@ class SubmitRankingsContainer extends Component {
       isLoggedIn: false,
       user: undefined,
       username: '',
-      rankingsList: null,
+      rankingsList: null
     }
   }
 
   componentDidMount() {
-    Requests.getAllPowerRankings().then(res => {
+    Requests.getAllPowerRankingsForCurrentSeason().then(res => {
       this.setState({
-        rankingsList: res,
+        rankingsList: res
       })
     })
   }
-
 
   setUser = user => {
     this.setState({ isLoggedIn: true, user: user })
@@ -33,19 +32,17 @@ class SubmitRankingsContainer extends Component {
         <p>
           Submit rankings for the week. Closes on Thursday at 5pm Parker time.
         </p>
-        {this.state.isLoggedIn && this.state.user
-         ?
-         <RankingSelectionContainer
-           user={this.state.user}
-           rankingsList={this.state.rankingsList}
-         />
-         :
+        {this.state.isLoggedIn && this.state.user ? (
+          <RankingSelectionContainer
+            user={this.state.user}
+            rankingsList={this.state.rankingsList}
+          />
+        ) : (
           <LoginComponent setUser={this.setUser} />
-        }
+        )}
       </div>
     )
   }
 }
-
 
 export default SubmitRankingsContainer

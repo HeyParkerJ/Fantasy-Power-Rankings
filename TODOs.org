@@ -12,3 +12,6 @@
    CLOSED: [2019-09-22 Sun 08:38]
    - State "DONE"       from "TODO"       [2019-09-22 Sun 08:38]
 * TODO Set up the server to accept submissions for 2019
+* TODO Replace Moment with alternative
+* TODO Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
+* TODO Make auth not suck

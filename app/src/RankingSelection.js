@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import {
   SortableContainer,
   SortableElement,
@@ -10,25 +10,29 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import ErrorMessage from './ErrorMessage'
 import SuccessMessage from './SuccessMessage'
-import emoji from "emoji-dictionary";
+import emoji from 'emoji-dictionary'
 
 import RankingsUtils from './utils/RankingsUtils'
 
-const SortableItem = SortableElement(({ value, sortIndex }) =>
-                                     <Paper style={{
-                                                 "maxWidth": "125px",
-                                                 "marginTop": "4px",
-                                                 "marginBottom": "4px",
-                                                }}>
-                                       {sortIndex+1}:  <span>{emoji.getUnicode(value.emoji)}</span> &nbsp;{value.username} 
-                                     </Paper>)
+const SortableItem = SortableElement(({ value, sortIndex }) => (
+  <Paper
+    style={{
+      maxWidth: '125px',
+      marginTop: '4px',
+      marginBottom: '4px'
+    }}
+  >
+    {sortIndex + 1}: <span>{emoji.getUnicode(value.emoji)}</span> &nbsp;
+    {value.username}
+  </Paper>
+))
 
 const SortableList = SortableContainer(({ teams }) => {
   return (
     <ul>
       {teams.map((value, index) => (
         <SortableItem
-          key={`item-${index}`}//`; this fixes chrome debugger breaking on backticks
+          key={`item-${index}`} //`; this fixes chrome debugger breaking on backticks
           index={index}
           sortIndex={index}
           value={value}
@@ -48,7 +52,7 @@ class RankingSelection extends Component {
   }
 
   getMostRecentSubmissionFromTeam = () => {
-    let keys = Object.keys(this.props.rankingsList).map((k) => {
+    let keys = Object.keys(this.props.rankingsList).map(k => {
       return parseInt(k)
     })
     let latestWeekId = Math.max.apply(Math, keys)
@@ -56,8 +60,12 @@ class RankingSelection extends Component {
 
     let mostRecentSubmission = null
 
-    latestWeek.forEach((week) => {
-      if(week.teamId === this.props.teamId) {
+    if (!latestWeek) {
+      return null
+    }
+
+    latestWeek.forEach(week => {
+      if (week.teamId === this.props.teamId) {
         mostRecentSubmission = week.rankings[0]
       }
     })
@@ -66,35 +74,40 @@ class RankingSelection extends Component {
   }
 
   sortTeams = () => {
-    let keys = Object.keys(this.props.rankingsList).map((k) => {
+    let keys = Object.keys(this.props.rankingsList).map(k => {
       return parseInt(k)
     })
     let latestWeekId = Math.max.apply(Math, keys)
 
     let mostRecentSubmission = this.getMostRecentSubmissionFromTeam()
-    if(mostRecentSubmission === null) {
-      let aggregateRankings = RankingsUtils.createAggregateRankings(this.props.rankingsList[latestWeekId])
+    if (mostRecentSubmission === null) {
+      let aggregateRankings = RankingsUtils.createAggregateRankings(
+        this.props.rankingsList[latestWeekId]
+      )
       // AggregateRankings comes back as an object so we need to make it an ordered array
-      let sortedAggregateRankings = RankingsUtils.createAggregateRankingsArray(aggregateRankings);
+      let sortedAggregateRankings = RankingsUtils.createAggregateRankingsArray(
+        aggregateRankings
+      )
       mostRecentSubmission = sortedAggregateRankings
     }
 
     let latestRankings = []
-    mostRecentSubmission.forEach((r) => {
+    mostRecentSubmission.forEach(r => {
       latestRankings.push(parseInt(r.teamId))
     })
 
-    function mapOrder (array, order, key) {
-      array.sort( function (a, b) {
-        var A = a[key], B = b[key];
+    function mapOrder(array, order, key) {
+      array.sort(function(a, b) {
+        var A = a[key],
+          B = b[key]
         if (order.indexOf(A) > order.indexOf(B)) {
-          return 1;
+          return 1
         } else {
-          return -1;
+          return -1
         }
-      });
+      })
       return array
-    };
+    }
 
     return mapOrder(this.props.teams, latestRankings, 'teamId')
   }
@@ -109,7 +122,7 @@ class RankingSelection extends Component {
     Requests.postPowerRankings({
       teamId: this.props.teamId,
       rankings: this.state.teams
-    }).then((res) => {
+    }).then(res => {
       this.setState({
         status: res
       })
@@ -117,34 +130,30 @@ class RankingSelection extends Component {
   }
 
   renderError = () => {
-    if(this.state.status && this.state.status.status !== 200 ) {
+    if (this.state.status && this.state.status.status !== 200) {
       return <ErrorMessage message={this.state.status.data} />
     } else {
       return null
     }
   }
   renderSuccess = () => {
-    if(this.state.status && this.state.status.status === 200) {
+    if (this.state.status && this.state.status.status === 200) {
       return <SuccessMessage message={this.state.status.data} />
     } else {
       return null
     }
   }
 
-
   render() {
     let teams = null
     if (this.state.teams) {
       teams = (
-        <SortableList
-          teams={this.state.teams}
-          onSortEnd={this.onSortEnd}
-        />
+        <SortableList teams={this.state.teams} onSortEnd={this.onSortEnd} />
       )
     }
     return (
       <div>
-        <div style={{'color':'red'}}>Drag and drop, then click submit</div>
+        <div style={{ color: 'red' }}>Drag and drop, then click submit</div>
         {teams}
         <div>
           {this.renderError()}
@@ -164,7 +173,7 @@ class RankingSelection extends Component {
 
 RankingSelection.propTypes = {
   rankingsList: PropTypes.object,
-  teams: PropTypes.array,
+  teams: PropTypes.array
 }
 
 export default RankingSelection
