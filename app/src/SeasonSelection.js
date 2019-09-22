@@ -43,9 +43,7 @@ export default function SeasonSelection(props) {
           value={props.selectedSeason}
           onChange={handleChange}
           renderValue={selected => {
-            if (selected.length === 0) {
-              return <em>2019</em>
-            }
+            return selected
           }}
           inputProps={{
             name: 'season',

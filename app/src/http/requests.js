@@ -17,14 +17,15 @@ export default {
     })
   },
 
-  getDataForSeason: (seasonId) => {
+  getDataForSeason: seasonId => {
     return new Promise((resolve, reject) => {
-      Axios.get(url + 'data/' + seasonId).then(response => {
-        resolve(response.data)
-      })
-      .catch(err => {
-        reject(err)
-      })
+      Axios.get(url + 'data/' + seasonId)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   },
 
@@ -52,7 +53,7 @@ export default {
     })
   },
 
-  postPowerRankings: (powerRankings) => {
+  postPowerRankings: powerRankings => {
     return new Promise((resolve, reject) => {
       Axios.post(url + 'api/postPowerRankings', powerRankings)
         .then(response => {
@@ -64,9 +65,20 @@ export default {
     })
   },
 
-  getAllPowerRankings: (powerRankings) => {
+  getAllPowerRankings: () => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getAllPowerRankings')
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+  getAllPowerRankingsForSeason: season => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url + 'api/getAllPowerRankingsForSeason/' + season)
         .then(response => {
           resolve(response.data)
         })

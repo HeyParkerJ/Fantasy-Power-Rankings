@@ -1,4 +1,6 @@
-* TODO Do I have to add a season value for the power rankings?
+* DONE Do I have to add a season value for the power rankings?
+  CLOSED: [2019-09-22 Sun 08:39]
+  - State "DONE"       from "TODO"       [2019-09-22 Sun 08:39]
   Might be best to do so and just edit all of last year's to 2018
 ** DONE Redump the db
    CLOSED: [2019-09-21 Sat 14:53]
@@ -6,4 +8,7 @@
 ** DONE modify the Model
    CLOSED: [2019-09-21 Sat 14:53]
    - State "DONE"       from "TODO"       [2019-09-21 Sat 14:53]
-** TODO Set up the front end to let you select a season
+** DONE Set up the front end to let you select a season
+   CLOSED: [2019-09-22 Sun 08:38]
+   - State "DONE"       from "TODO"       [2019-09-22 Sun 08:38]
+* TODO Set up the server to accept submissions for 2019

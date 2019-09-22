@@ -5,6 +5,7 @@ import PowerRankingWeekSelectionComponent from './PowerRankingWeekSelectionCompo
 import PowerRankingsCard from './PowerRankingsCard'
 import Grid from '@material-ui/core/Grid'
 import AggregatePowerRankingsContainer from './AggregatePowerRankingsContainer'
+import SeasonSelection from './SeasonSelection'
 
 class ViewPowerRankings extends Component {
   constructor() {
@@ -12,7 +13,8 @@ class ViewPowerRankings extends Component {
     this.state = {
       users: null,
       rankingsList: null,
-      selectedWeek: null
+      selectedWeek: null,
+      selectedSeason: 2019
     }
   }
 
@@ -20,17 +22,32 @@ class ViewPowerRankings extends Component {
     Requests.getTeams().then(res => {
       this.setState({ users: res.data })
     })
+    this.requestPowerRankings()
+  }
 
-    Requests.getAllPowerRankings().then(res => {
-      let keysArray = Object.keys(res).sort((a, b) => {
-        return parseInt(a) - parseInt(b)
-      })
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedSeason !== this.state.selectedSeason) {
+      this.requestPowerRankings()
+    }
+  }
 
-      this.setState({
-        rankingsList: res,
-        selectedWeek: res[keysArray.length - 1]
-      })
-    })
+  requestPowerRankings = () => {
+    Requests.getAllPowerRankingsForSeason(this.state.selectedSeason).then(
+      res => {
+        let keysArray = Object.keys(res).sort((a, b) => {
+          return parseInt(a) - parseInt(b)
+        })
+
+        this.setState({
+          rankingsList: res,
+          selectedWeek: res[keysArray.length - 1]
+        })
+      }
+    )
+  }
+
+  setSeason = season => {
+    this.setState({ selectedSeason: season })
   }
 
   setWeekToDisplay = week => {
@@ -112,6 +129,11 @@ class ViewPowerRankings extends Component {
     return (
       <div>
         {this.renderWeekSelection()}
+        <SeasonSelection
+          selectedSeason={this.state.selectedSeason}
+          setSeason={this.setSeason}
+        />
+
         <Grid container justify="center">
           {this.renderAggregatePowerRankingsContainer()}
         </Grid>

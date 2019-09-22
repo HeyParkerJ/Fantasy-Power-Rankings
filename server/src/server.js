@@ -152,10 +152,9 @@ app.post('/api/postPowerRankings', (req, res) => {
   )
 })
 
-app.get('/api/getAllPowerRankingsForYear/:year', (req, res) => {
-    const year = req.params.year
-    // TODO - year === year
-    PowerRanking.find({}, (err, rankings) => {
+app.get('/api/getAllPowerRankingsForSeason/:season', (req, res) => {
+    const season = req.params.season
+    PowerRanking.find({season: season}, (err, rankings) => {
         let formattedData = {}
 
         rankings.forEach(d => {

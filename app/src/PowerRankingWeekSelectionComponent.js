@@ -2,14 +2,10 @@ import React, { Component } from 'react'
 
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import SeasonSelection from './SeasonSelection'
 
 class PowerRankingWeekSelectionComponent extends Component {
-  defaultSeason = 2019
-
   state = {
-    selectedTab: this.props.weeks.length - 1,
-    selectedSeason: this.defaultSeason
+    selectedTab: !this.props.weeks.length ? 0 : this.props.weeks.length - 1
   }
 
   componentDidMount() {
@@ -19,10 +15,6 @@ class PowerRankingWeekSelectionComponent extends Component {
 
   handleTabClick = (event, value) => {
     this.setState({ selectedTab: value })
-  }
-
-  setSeason = season => {
-    this.setState({ selectedSeason: season })
   }
 
   renderWeeks = () => {
@@ -52,10 +44,6 @@ class PowerRankingWeekSelectionComponent extends Component {
         onChange={this.handleTabClick}
       >
         {this.renderWeeks()}
-        <SeasonSelection
-          selectedSeason={this.state.selectedSeason}
-          setSeason={this.setSeason}
-        />
       </Tabs>
     )
   }
