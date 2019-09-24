@@ -15,3 +15,4 @@
 * TODO Replace Moment with alternative
 * TODO Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
 * TODO Make auth not suck
+* TODO Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
