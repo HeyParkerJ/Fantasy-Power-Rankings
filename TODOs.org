@@ -12,8 +12,12 @@
    CLOSED: [2019-09-22 Sun 08:38]
    - State "DONE"       from "TODO"       [2019-09-22 Sun 08:38]
 * TODO Set up the server to accept submissions for 2019
-* TODO Replace Moment with alternative
-* TODO Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
-* TODO Make auth not suck
-* TODO Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
-* TODO Rename project, consider splitting into 2 projects
+* TODO [TD] Replace Moment with alternative
+* TODO [TD] Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
+* TODO [FEAT] Make auth not suck
+* TODO [BUG] Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
+* TODO [TD] Rename project, consider splitting into 2 projects
+* TODO [FEAT] Remove power rankings / raw data header. It's dumb and worthless.
+* TODO [TD] Change Mike and Dex's emojis
+* TODO [FEAT] Add charts
+* TODO [FEAT] Hook up to sleeper API and create a second tier1 card for points scored
