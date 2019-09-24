@@ -21,3 +21,4 @@
 * TODO [TD] Change Mike and Dex's emojis
 * TODO [FEAT] Add charts
 * TODO [FEAT] Hook up to sleeper API and create a second tier1 card for points scored
+* TODO [TD] Rename Power Rankings to Coaches Poll globally
