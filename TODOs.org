@@ -1,24 +1,37 @@
-* DONE Do I have to add a season value for the power rankings?
-  CLOSED: [2019-09-22 Sun 08:39]
+* Priority defintion
+  A - Optimal combination of time estimate and value gained
+  B - Notably less optimal than items in A. These shouldn't be done until A is done.
+  C - Can be done in the offseason or they're very time consuming. Most tech debt items will end up here, unfortunately.
+* TODO [#A] [TD] Rename project, consider splitting into 2 projects
+* TODO [#B] [FEAT] Make auth not suck
+* TODO [BUG] Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
+* TODO [#B] [FEAT] Add charts
+* TODO [#B] [FEAT] Hook up to sleeper API and create a second tier1 card for points scored
+* TODO [#C] [TD] Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
+* TODO [#C] [TD] Replace Moment with alternative
+* DONE [#A] [FEAT] Remove power rankings / raw data header. It's dumb and worthless.
+  CLOSED: [2019-09-29 Sun 15:00]
+  - State "DONE"       from "IN-PROGRESS" [2019-09-29 Sun 15:00]
+  - State "IN-PROGRESS" from "TODO"       [2019-09-29 Sun 14:13]
+* CANCELLED [TD] Rename Power Rankings to Coaches Poll globally
+  CLOSED: [2019-09-28 Sat 12:18]
+  - State "CANCELLED"  from "TODO"       [2019-09-28 Sat 12:18] \\
+    dumb idea not worth it
+* DONE [#A] [TD] Change Mike and Dex's emojis
+  CLOSED: [2019-09-29 Sun 13:27]
+  - State "DONE"       from "TODO"       [2019-09-29 Sun 13:27]
+* DONE Set up the server to accept submissions for 2019
+  CLOSED: [2019-09-28 Sat 12:16]
+  - State "DONE"       from "IN-PROGRESS" [2019-09-28 Sat 12:16]
+* DONE Do I have to add a season value for the power rankings?  CLOSED: [2019-09-22 Sun 08:39]
   - State "DONE"       from "TODO"       [2019-09-22 Sun 08:39]
   Might be best to do so and just edit all of last year's to 2018
 * DONE Redump the db
-   CLOSED: [2019-09-21 Sat 14:53]
-   - State "DONE"       from "IN-PROGRESS" [2019-09-21 Sat 14:53]
-* DONE modify the Model
-   CLOSED: [2019-09-21 Sat 14:53]
-   - State "DONE"       from "TODO"       [2019-09-21 Sat 14:53]
+  CLOSED: [2019-09-21 Sat 14:53]
+  - State "DONE"       from "IN-PROGRESS" [2019-09-21 Sat 14:53]
 * DONE Set up the front end to let you select a season
-   CLOSED: [2019-09-22 Sun 08:38]
-   - State "DONE"       from "TODO"       [2019-09-22 Sun 08:38]
-* TODO Set up the server to accept submissions for 2019
-* TODO [TD] Replace Moment with alternative
-* TODO [TD] Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
-* TODO [FEAT] Make auth not suck
-* TODO [BUG] Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
-* TODO [TD] Rename project, consider splitting into 2 projects
-* TODO [FEAT] Remove power rankings / raw data header. It's dumb and worthless.
-* TODO [TD] Change Mike and Dex's emojis
-* TODO [FEAT] Add charts
-* TODO [FEAT] Hook up to sleeper API and create a second tier1 card for points scored
-* TODO [TD] Rename Power Rankings to Coaches Poll globally
+  CLOSED: [2019-09-22 Sun 08:38]
+  - State "DONE"       from "TODO"       [2019-09-22 Sun 08:38]
+    CLOSED: [2019-09-21 Sat 14:53]
+    - State "DONE"       from "TODO"       [2019-09-21 Sat 14:53]
+* DONE modify the Model
