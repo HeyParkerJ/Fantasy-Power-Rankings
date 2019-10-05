@@ -4,11 +4,11 @@
   C - Can be done in the offseason or they're very time consuming. Most tech debt items will end up here, unfortunately.
 * TODO [#A] [TD] Rename project, consider splitting into 2 projects
 * TODO [#B] [FEAT] Make auth not suck
-* TODO [BUG] Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
 * TODO [#B] [FEAT] Add charts
 * TODO [#B] [FEAT] Hook up to sleeper API and create a second tier1 card for points scored
-* TODO [#C] [TD] Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
 * TODO [#C] [TD] Replace Moment with alternative
+* TODO [#C] [TD] Change wording of 'season' and 'currentSeason' to something more obvious like 'selectedSeason'
+* TODO [#C] [BUG] Mobile dragging looks buggy when the screen is zoomed in. Can we automate a zoom out or use a better library?
 * DONE [#A] [FEAT] Remove power rankings / raw data header. It's dumb and worthless.
   CLOSED: [2019-09-29 Sun 15:00]
   - State "DONE"       from "IN-PROGRESS" [2019-09-29 Sun 15:00]
