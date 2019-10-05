@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
-import RankingSelectionContainer from './RankingSelectionContainer'
-import LoginComponent from './LoginComponent'
-import Requests from './http/requests'
+import React, { Component } from 'react';
+import RankingSelectionContainer from './RankingSelectionContainer';
+import LoginComponent from './LoginComponent';
+import Requests from './http/requests';
 
 class SubmitRankingsContainer extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       isLoggedIn: false,
       user: undefined,
       username: '',
       rankingsList: null
-    }
+    };
   }
 
   componentDidMount() {
     Requests.getAllPowerRankingsForCurrentSeason().then(res => {
       this.setState({
         rankingsList: res
-      })
-    })
+      });
+    });
   }
 
   setUser = user => {
-    this.setState({ isLoggedIn: true, user: user })
-  }
+    this.setState({ isLoggedIn: true, user: user });
+  };
 
   render() {
     return (
@@ -41,8 +41,8 @@ class SubmitRankingsContainer extends Component {
           <LoginComponent setUser={this.setUser} />
         )}
       </div>
-    )
+    );
   }
 }
 
-export default SubmitRankingsContainer
+export default SubmitRankingsContainer;

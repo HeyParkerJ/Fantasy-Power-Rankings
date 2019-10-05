@@ -1,103 +1,103 @@
-import Axios from 'axios'
+import Axios from 'axios';
 
-let prodUrl = 'https://10guys1cup.com/'
-let devUrl = 'http://localhost:1337/'
-let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl
+let prodUrl = 'https://10guys1cup.com/';
+let devUrl = 'http://localhost:1337/';
+let url = process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 
 export default {
   loginUser: data => {
     return new Promise((resolve, reject) => {
       Axios.post(url + 'api/login', data)
         .then(response => {
-          resolve(response)
+          resolve(response);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
 
   getDataForSeason: seasonId => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'data/' + seasonId)
         .then(response => {
-          resolve(response.data)
+          resolve(response.data);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
 
   getUsers: () => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getUsers')
         .then(response => {
-          resolve(response)
+          resolve(response);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
 
   getTeams: () => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getTeams')
         .then(response => {
-          resolve(response)
+          resolve(response);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
 
   postPowerRankings: powerRankings => {
     return new Promise((resolve, reject) => {
       Axios.post(url + 'api/postPowerRankings', powerRankings)
         .then(response => {
-          resolve(response)
+          resolve(response);
         })
         .catch(err => {
-          resolve(err.response)
-        })
-    })
+          resolve(err.response);
+        });
+    });
   },
 
   getAllPowerRankings: () => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getAllPowerRankings')
         .then(response => {
-          resolve(response.data)
+          resolve(response.data);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
   getAllPowerRankingsForSeason: season => {
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getAllPowerRankingsForSeason/' + season)
         .then(response => {
-          resolve(response.data)
+          resolve(response.data);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   },
   getAllPowerRankingsForCurrentSeason: () => {
     // TODO - change this after one submission has been created.
-    const currentYear = 2018 // TODO - Because I don't want to add moment to the front end and it's smarter to just do this for now
+    const currentYear = 2018; // TODO - Because I don't want to add moment to the front end and it's smarter to just do this for now
     return new Promise((resolve, reject) => {
       Axios.get(url + 'api/getAllPowerRankingsForSeason/' + currentYear)
         .then(response => {
-          resolve(response.data)
+          resolve(response.data);
         })
         .catch(err => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   }
-}
+};

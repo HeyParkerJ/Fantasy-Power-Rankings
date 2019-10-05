@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import SubmitRankingsContainer from './SubmitRankingsContainer'
-import ViewPowerRankings from './ViewPowerRankings'
-import { Route, Link, Switch } from 'react-router-dom'
+import SubmitRankingsContainer from './SubmitRankingsContainer';
+import ViewPowerRankings from './ViewPowerRankings';
+import { Route, Link, Switch } from 'react-router-dom';
 
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 class PowerRankings extends Component {
   state = {
     selectedTab: 0
-  }
+  };
 
   handleTabClick = (event, value) => {
-    this.setState({ selectedTab: value })
-  }
+    this.setState({ selectedTab: value });
+  };
 
   renderTabs = () => {
     return [
@@ -30,8 +30,8 @@ class PowerRankings extends Component {
         to="/powerRankings/submit"
         label="Submit Rankings"
       />
-    ]
-  }
+    ];
+  };
 
   render() {
     return (
@@ -58,8 +58,8 @@ class PowerRankings extends Component {
         />
         <Switch />
       </div>
-    )
+    );
   }
 }
 
-export default PowerRankings
+export default PowerRankings;
