@@ -1,33 +1,33 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Requests from './http/requests'
-import PowerRankingWeekSelectionComponent from './PowerRankingWeekSelectionComponent'
-import PowerRankingsCard from './PowerRankingsCard'
-import Grid from '@material-ui/core/Grid'
-import AggregatePowerRankingsContainer from './AggregatePowerRankingsContainer'
-import SeasonSelection from './SeasonSelection'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Requests from './http/requests';
+import PowerRankingWeekSelectionComponent from './PowerRankingWeekSelectionComponent';
+import PowerRankingsCard from './PowerRankingsCard';
+import Grid from '@material-ui/core/Grid';
+import AggregatePowerRankingsContainer from './AggregatePowerRankingsContainer';
+import SeasonSelection from './SeasonSelection';
 
 class ViewPowerRankings extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       users: null,
       rankingsList: null,
       selectedWeek: null,
       selectedSeason: 2019
-    }
+    };
   }
 
   componentDidMount() {
     Requests.getTeams().then(res => {
-      this.setState({ users: res.data })
-    })
-    this.requestPowerRankings()
+      this.setState({ users: res.data });
+    });
+    this.requestPowerRankings();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedSeason !== this.state.selectedSeason) {
-      this.requestPowerRankings()
+      this.requestPowerRankings();
     }
   }
 
@@ -35,34 +35,34 @@ class ViewPowerRankings extends Component {
     Requests.getAllPowerRankingsForSeason(this.state.selectedSeason).then(
       res => {
         let keysArray = Object.keys(res).sort((a, b) => {
-          return parseInt(a) - parseInt(b)
-        })
+          return parseInt(a) - parseInt(b);
+        });
 
         this.setState({
           rankingsList: res,
           selectedWeek: res[keysArray.length - 1]
-        })
+        });
       }
-    )
-  }
+    );
+  };
 
   setSeason = season => {
-    this.setState({ selectedSeason: season })
-  }
+    this.setState({ selectedSeason: season });
+  };
 
   setWeekToDisplay = week => {
-    this.setState({ selectedWeek: week })
-  }
+    this.setState({ selectedWeek: week });
+  };
 
   renderWeekSelection = () => {
-    let weeksWithSubmissions = []
+    let weeksWithSubmissions = [];
 
     if (this.state.rankingsList) {
       Object.keys(this.state.rankingsList).forEach((week, index) => {
-        weeksWithSubmissions.push(week)
-      })
+        weeksWithSubmissions.push(week);
+      });
     } else {
-      return <p>Placeholder until we get the weeks back</p>
+      return <p>Placeholder until we get the weeks back</p>;
     }
 
     return (
@@ -70,11 +70,11 @@ class ViewPowerRankings extends Component {
         weeks={weeksWithSubmissions}
         setWeekToDisplay={this.setWeekToDisplay}
       />
-    )
-  }
+    );
+  };
 
   renderSelectedWeek = () => {
-    let rankings = []
+    let rankings = [];
 
     if (
       this.state.selectedWeek &&
@@ -88,11 +88,11 @@ class ViewPowerRankings extends Component {
             rankings={ranking}
             users={this.state.users}
           />
-        )
-      })
+        );
+      });
     }
-    return rankings
-  }
+    return rankings;
+  };
 
   renderAggregatePowerRankingsContainer = () => {
     if (
@@ -105,25 +105,25 @@ class ViewPowerRankings extends Component {
           rankings={this.state.rankingsList[this.state.selectedWeek]}
           users={this.state.users}
         />
-      )
+      );
     } else {
-      return null
+      return null;
     }
-  }
+  };
 
   renderRankings = () => {
-    let rankingsDiv = []
+    let rankingsDiv = [];
     if (this.state.rankingsList) {
       this.state.rankingsList.forEach(ranking => {
         rankingsDiv.push(
           <PowerRankingsCard key={ranking.teamId} ranking={ranking} />
-        )
-      })
+        );
+      });
     } else {
-      rankingsDiv.push(<p>Imagine these are the power rankings</p>)
+      rankingsDiv.push(<p>Imagine these are the power rankings</p>);
     }
-    return rankingsDiv
-  }
+    return rankingsDiv;
+  };
 
   render() {
     return (
@@ -149,13 +149,13 @@ class ViewPowerRankings extends Component {
           {this.renderSelectedWeek()}
         </Grid>
       </div>
-    )
+    );
   }
 }
 
 ViewPowerRankings.propTypes = {
   rankingsList: PropTypes.object,
   selectedWeek: PropTypes.string
-}
+};
 
-export default ViewPowerRankings
+export default ViewPowerRankings;

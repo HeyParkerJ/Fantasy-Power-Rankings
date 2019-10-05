@@ -1,10 +1,10 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
-import Button from '@material-ui/core/Button'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -15,22 +15,22 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     minWidth: 120
   }
-}))
+}));
 
 export default function SeasonSelection(props) {
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   function handleChange(event) {
-    props.setSeason(event.target.value)
+    props.setSeason(event.target.value);
   }
 
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   function handleOpen() {
-    setOpen(true)
+    setOpen(true);
   }
 
   return (
@@ -43,7 +43,7 @@ export default function SeasonSelection(props) {
           value={props.selectedSeason}
           onChange={handleChange}
           renderValue={selected => {
-            return selected
+            return selected;
           }}
           inputProps={{
             name: 'season',
@@ -58,5 +58,5 @@ export default function SeasonSelection(props) {
         </Select>
       </FormControl>
     </form>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import ReactJson from 'react-json-view'
+import React, { Component } from 'react';
+import ReactJson from 'react-json-view';
 
 class DataDisplay extends Component {
   render() {
@@ -13,8 +13,8 @@ class DataDisplay extends Component {
         collapseStringsAfterLength={120}
         displayDataTypes={false}
       />
-    )
+    );
   }
 }
 
-export default DataDisplay
+export default DataDisplay;
