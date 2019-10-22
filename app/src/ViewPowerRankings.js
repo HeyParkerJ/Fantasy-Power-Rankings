@@ -40,7 +40,7 @@ class ViewPowerRankings extends Component {
 
         this.setState({
           rankingsList: res,
-            selectedWeek: res[Math.max(parseInt(...keysArray))]
+            selectedWeek: Math.max(parseInt(...keysArray))
         });
       }
     );
